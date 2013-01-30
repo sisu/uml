@@ -35,3 +35,55 @@ varplot <- function() {
 	cvars <- cumsum(nvars)
 	barplot(cvars)
 }
+
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3
+
+mroot <- function(a) {
+	eig <- eigen(a)
+	eig$vectors %*% diag(sqrt(eig$values)) %*% t(eig$vectors)
+}
+mroott <- function(mat,maxit=50) {
+	stopifnot(nrow(mat) == ncol(mat))
+	niter <- 0
+	y <- mat
+	z <- diag(rep(1,nrow(mat)))
+	for (niter in 1:maxit) {
+		y.temp <- 0.5*(y+solve(z))
+		z <- 0.5*(z+solve(y))
+		y <- y.temp
+	}
+	y
+}
+
+quartimax <- function(A) {
+	f <- 0.01
+	U <- diag(dim(A)[2])
+	for (i in 1:100) {
+		U <- U + f * gradJ(A,U)
+		U <- solve(mroot(U%*%t(U))) %*% U
+#		U <- U %*% solve(mroot(t(U)%*%U))
+	}
+	U
+}
+
+A0 <- c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010)
+A1 <- c(.9511, -1.6435, 2.3655, -2.9154, 3.7010)
+A <- matrix(c(A0,-A1),5,2)
+#Anorm <- matrix(c(A0/sqrt(sum(A0*A0)),A1/sqrt(sum(A1*A1))),5,2)
+
+u1proj <- c(-0.7625, 0.5724, -0.0865, -0.0191, -0.2882)
+u2proj <- c(-0.0338, 0.0377, -0.6922, -0.5909, 0.4113)
+
+projqmax <- function() {
+	u1 <- px$rotation[,1]
+	u2 <- px$rotation[,2]
+	a <- matrix(c(u1,u2),5)
+#	A <- px$rotation
+	U <- quartimax(a)
+	m <- a %*% U
+	d <- X %*% m
+	plot(d, xlim=c(-10,10), ylim=c(-10,10))
+	abline(h=0,v=0,col='blue',lwd=3)
+	segments(x0=0,y0=0,x1=10*m[,1],y1=10*m[,2],col='red',lwd=2)
+	m
+}

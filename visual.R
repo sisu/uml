@@ -10,10 +10,10 @@
 visual <- function( A, cols=0, bgblack=0, border=0 )
 {
 
-  if (cols==0) cols <- round(sqrt(dim(A)[1]))
+  if (cols==0) cols <- round(sqrt(dim(A)[2]))
   
   # Transpose to have each column be an image
-  A <- t(A)
+#  A <- t(A)
 
   # Get maximum absolute value (it represents white or black; zero is gray)
   maxi <- max(max(abs(A)))

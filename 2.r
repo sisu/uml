@@ -22,10 +22,11 @@ projplot <- function() {
 #	print(yv)
 
 #	plot.new()
-	plot(xs,ys, asp=1, col='blue', xlab='First principal component', ylab='Second principal component')
+	plot(xs,ys, asp=1, col='black', xlab='The first principal component', ylab='The second principal component')
 #	segments(x0=0,y0=0, x1=xs, y1=ys)
 #	points(xv,yv)
-	segments(x0=0,y0=0, x1=xv, y1=yv, col='red')
+	segments(x0=0,y0=0, x1=xv, y1=yv, col='red', lwd=2)
+	abline(h=0,v=0,col='blue',lwd=3)
 }
 
 varplot <- function() {
@@ -33,7 +34,8 @@ varplot <- function() {
 	vars <- devs*devs
 	nvars <- vars / sum(vars)
 	cvars <- cumsum(nvars)
-	barplot(cvars)
+	plot(cvars, xlab='Number of principal components', ylab='Variance explained', t='l')
+		 #, names.arg=1:5)
 }
 
 gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3
@@ -82,8 +84,24 @@ projqmax <- function() {
 	U <- quartimax(a)
 	m <- a %*% U
 	d <- X %*% m
-	plot(d, xlim=c(-10,10), ylim=c(-10,10))
+	plot(d, xlim=c(-10,10), ylim=c(-10,10), xlab='The first principal component rotated', ylab='The second principal component rotated')
 	abline(h=0,v=0,col='blue',lwd=3)
 	segments(x0=0,y0=0,x1=10*m[,1],y1=10*m[,2],col='red',lwd=2)
 	m
+}
+
+mkpdfs <- function() {
+	w <- 7
+	h <- 7
+	pdf('doc/fig42.pdf', width=w, height=h)
+	projplot()
+	dev.off()
+
+	pdf('doc/varamount.pdf', width=w, height=h)
+	varplot()
+	dev.off()
+
+	pdf('doc/qmax.pdf', width=w, height=h)
+	projqmax()
+	dev.off()
 }

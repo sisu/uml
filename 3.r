@@ -28,6 +28,14 @@ postprocess <- function(d) {
 	y <- sapply(1:n, function(i) x[,i]*d$norms[i])
 	y + matrix(rep(d$avgs, v), v, byrow=T)
 }
+take <- function(d, ns) {
+	r <- NULL
+	r$avgs <- d$avgs[ns]
+	r$norms <- d$norms[ns]
+	r$vmeans <- d$vmeans
+	r$x <- d$x[,ns]
+	r
+}
 
 data <- preprocess(digits)
 
@@ -43,17 +51,18 @@ plotpcas <- function(n) visual(t(pc$rotation[,1:n]))
 
 counts <- c(2^(0:7), dim(td)[2])
 
-tdigits <- td[1:10,]
+tdata <- take(data, 1:10)
 
 approxby <- function(d, n) {
 	cs <- pc$rotation[,1:n]
-	reduced <- d %*% cs
-	reduced %*% t(cs)
+	reduced <- t(d$x) %*% cs
+	d$x <- t(reduced %*% t(cs))
+	postprocess(d)
 }
 
 plotapprox <- function() {
-	resmat <- data.frame(lapply(counts, function(n) t(approxby(tdigits, n))))
-	dc <- dim(tdigits)[1]
+	resmat <- data.frame(lapply(counts, function(n) approxby(tdata, n)))
+	dc <- dim(tdata$x)[2]
 	cc <- length(counts)
 	order <- c(sapply(1:dc, function(n) n+dc*(0:(cc-1))))
 #	print(order)
@@ -62,10 +71,11 @@ plotapprox <- function() {
 }
 
 noisyt <- read.table('noisyDigits.txt')
-noisy <- t(noisyt)
+noisy <- preprocess(noisyt)
+#noisy <- t(noisyt)
 plotdenoise <- function(n) {
 	dn <- approxby(noisy, n)
-	visual(dn)
+	visual(t(dn))
 }
 
 mkpdfs <- function() {
@@ -93,7 +103,7 @@ mkpdfs <- function() {
 	dev.off()
 
 	pdf('doc/noisy.pdf', width=w, height=h)
-	visual(noisy)
+	visual(t(noisy$x))
 	dev.off()
 
 	dns <- 2^(3:6)

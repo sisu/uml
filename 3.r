@@ -1,19 +1,37 @@
 source('visual.R')
 
 digits <- read.table('digits.txt')
-vars <- dim(digits)[1]
-nums <- dim(digits)[2]
 
-avgs <- colSums(digits) / vars
-digits.center <- digits - matrix(rep(avgs, vars), vars, byrow=T)
+preprocess <- function(d) {
+	v <- dim(d)[1]
+	n <- dim(d)[2]
 
-normalize <- function(v) v / norm(matrix(v),"F")
-digits.norm <- sapply(1:nums, function(i) normalize(digits.center[,i]))
+	avgs <- colSums(d) / v
+	center <- d - matrix(rep(avgs, v), v, byrow=T)
 
-vmeans <- rowSums(digits.norm) / nums
-data <- digits.norm - matrix(rep(vmeans,nums), vars)
+	norms <- sapply(1:n, function(i) norm(matrix(center[,i]), "F"))
+	normalized <- sapply(1:n, function(i) center[,i]/norms[i])
+	vmeans <- rowSums(normalized) / n
+	data <- normalized - matrix(rep(vmeans,n), v)
 
-td <- t(data)
+	res <- NULL
+	res$avgs <- avgs
+	res$norms <- norms
+	res$vmeans <- vmeans
+	res$x <- data
+	res
+}
+postprocess <- function(d) {
+	v <- dim(d$x)[1]
+	n <- dim(d$x)[2]
+	x <- d$x + matrix(rep(d$vmeans,n), v)
+	y <- sapply(1:n, function(i) x[,i]*d$norms[i])
+	y + matrix(rep(d$avgs, v), v, byrow=T)
+}
+
+data <- preprocess(digits)
+
+td <- t(data$x)
 pc <- prcomp(td)
 
 plotpcadev <- function() {

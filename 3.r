@@ -79,36 +79,36 @@ plotdenoise <- function(n) {
 }
 
 mkpdfs <- function() {
-	w <- 7
-	h <- 7
+	w <- 500
+	h <- 500
 	n <- 20
-	pdf('doc/digits.pdf', width=w, height=h)
+	png('doc/digits.png', width=w, height=h)
 	visual(t(digits)[1:n,])
 	dev.off()
 
-	pdf('doc/digitspre.pdf', width=w, height=h)
+	png('doc/digitspre.png', width=w, height=h)
 	visual(t(data$x)[1:n,])
 	dev.off()
 
-	pdf('doc/pcavar.pdf', width=w, height=h)
+	pdf('doc/pcavar.pdf', width=7, height=7)
 	plotpcadev()
 	dev.off()
 
-	pdf('doc/pcanums.pdf', width=w, height=h)
+	png('doc/pcanums.png', width=w, height=h)
 	plotpcas(20)
 	dev.off()
 
-	pdf('doc/digitreduce.pdf', width=w, height=h)
+	png('doc/digitreduce.png', width=w, height=h)
 	plotapprox()
 	dev.off()
 
-	pdf('doc/noisy.pdf', width=w, height=h)
+	png('doc/noisy.png', width=w, height=h)
 	visual(t(noisy$x))
 	dev.off()
 
 	dns <- 2^(3:6)
 	for (i in dns) {
-		pdf(paste('doc/denoise',i,'.pdf',sep=''), width=w, height=h)
+		png(paste('doc/denoise',i,'.png',sep=''), width=w, height=h)
 		plotdenoise(i)
 		dev.off()
 	}

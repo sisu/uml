@@ -47,10 +47,10 @@ projvv <- function() {
 	p <- c(rbind(t(c0)) %*% t(vvec))
 
 	filt <- vvec[1:50,]
-	plot(filt, ann=F)
+	plot(filt, ann=F, col='blue', asp=1)
 	pf <- p[1:50]
 	pps <- data.frame(pf %*% rbind(c0))
-	points(pps)
+	points(pps, col='red')
 	segments(x0=pps[,1], y0=pps[,2], x1=filt[,1], y1=filt[,2])
 }
 

@@ -1,0 +1,1060 @@
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/ex1/ex15.r")
+ls()
+avRecError
+propVar
+rm(list = ls())
+ls()
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+cov <- cov(data)#
+eig <- eigen(cov)
+ls()
+head(data)
+help(prcomp)
+X0 <- c(5,3,0,1,-1,-3,5,0,-4,-4,#
+	    -2,-1,0,0,1,4,-3,1,5,3,#
+	    0,1,4,-1,0,5,5,-5,-3,-3,#
+	    0,2,3,0,-1,3,3,-7,-2,0,#
+	    3,4,-2,1,3,-3,-3,2,0,0)#
+X <- t(matrix(X0, 5, 10, byrow=T))#
+#
+px <- prcomp(X)#
+#
+projplot <- function() {#
+	c1 <- px$rotation[,1]#
+	c2 <- px$rotation[,2]#
+#
+	xs <- px$x[,1]#
+	ys <- px$x[,2]#
+#
+	vars <- 10*diag(5)#
+	xv <- 10*c1#
+	yv <- 10*c2#
+#
+#	print(xv)#
+#	print(yv)#
+#
+#	plot.new()#
+	plot(xs,ys, asp=1, col='black', xlab='The first principal component', ylab='The second principal component')#
+#	segments(x0=0,y0=0, x1=xs, y1=ys)#
+#	points(xv,yv)#
+	segments(x0=0,y0=0, x1=xv, y1=yv, col='red', lwd=2)#
+	abline(h=0,v=0,col='blue',lwd=3)#
+}
+rm(list = ls())
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+cov <- cov(data)#
+eig <- eigen(cov)
+mean(data)
+sum()
+sum(mean(data))
+rm(list = ls())
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+data - mean(data)#
+#
+cov <- cov(data)#
+eig <- eigen(cov)
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+data <- data - mean(data)#
+#
+cov <- cov(data)#
+eig <- eigen(cov)
+data <- data - colmeans(data)
+data <- data - colMeans(data)
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+data <- data - colMeans(data)#
+#
+cov <- cov(data)#
+eig <- eigen(cov)
+data
+colMeans(data)
+mean(data)
+sum(mean(data))
+mean()data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)
+data
+mean(data$X1)
+data$X1 - mean(data$X1)
+mean(data$X1 - mean(data$X1))
+colMeans(data-colMenas(data))
+colMeans(data-colMeans(data))
+data <- read.table("data1")#
+#
+data = data-colMeans(data) # Because of zero mean assumption :)
+mean(dat)
+mean(data)
+data <- read.table("data1")#
+#
+data = data-colMeans(data) # Because of zero mean assumption :)
+mean(data)
+data <- read.table("data1")
+mean(data)
+data <- read.table("data1")#
+#
+data = data-colMeans(data) # Because of zero mean assumption :)
+mean(data)
+data[,1]
+seq(colMeans(data), length = data[,1])
+rep(colMeans(data), length = data[,1])
+rep(colMeans(data), length = length(data[,1]))
+cMeans <- data.frame(colMeans(data), nrow = length(data[,1]))
+head(cMeans)
+help(data.frame)
+matrix(colMeans(data), nrow = 1000)
+matrix(colMeans(data))
+help(apply)
+data <- apply(data, 1, "-", colMeans(data))
+data <- read.table("data1")#
+data <- apply(data, 1, "-", colMeans(data))
+head(data)
+data <- read.table("data1")
+head(data)
+colMeans(data)
+data[1,]
+data[1,] - colMeans(data)
+data[1:2,]
+data[1:2,] - colMeans(data)
+length(data)
+length(data[1])
+length(data[1,])
+length(data[,1])
+data <- data[1:length(data[,1]),] - colMeans(data)
+colMeans(data)
+data <- data[1:length(data[,1]),] - colMeans(data)
+colMeans(data)
+data <- data[1:length(data[,1]),] - colMeans(data)
+colMeans(data)
+data <- (data[1:length(data[,1]),] - colMeans(data))
+data
+colMeans(data)
+X = matrix(c(1,1,1), c(2,2))
+X = matrix(c(1,1,1,1), c(2,2))
+means
+mean(X)
+X
+mean(data)
+data <- read.table("data1")
+mean(data[,1])
+data[,1]- mean(data[,1])
+mean(data[,1]- mean(data[,1]))
+mean(data[,:])
+mean(data[,1:length(data)])
+X = matrix(rep(1, times = 100), c(2,50))
+X
+X = matrix(rep(1, times = 100), c(50,2))
+X
+X - c(1,1)
+data <- read.table("data1")#
+#
+# Center data:#
+data <- as.matrix(data)
+mean(data)
+colMeans(data)
+mean(colMeans(data))
+data - colMeans(data)
+head(data - colMeans(data))
+colMeans(data - colMeans(data))
+data - c(1,1,1,1,1,1,1,1)
+head(data)
+head(data - c(1,1,1,1,1,1,1,1))
+mean[data[,1]]
+mean(data[,1])
+mean(data[,1]-mean(data[,1]))
+colMeans(data - colMeans(data))
+head(data)
+head(data - c(1,2,3,4,5,6,7,8))
+c(1,2) - c(3,4)
+c(1,2) - c(3,5)
+data[1,] - c(c(1,2,3,4,5,6,7,8))
+head(apply(data,1,"-", c(1,2,3,4,5,6,7,8)))
+help(apply)
+head((t(apply(data,1,"-", c(1,2,3,4,5,6,7,8)))))
+head(data)
+data <- read.table("data1")#
+#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data))
+)
+data <- read.table("data1")#
+#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))
+head(data)
+colMeans(data)
+data <- data.frame(data)
+head(data)
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/ex1/ex11.r")
+U <- diag(dim(A)[2])
+A0 <- c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010)#
+A1 <- c(.9511, -1.6435, 2.3655, -2.9154, 3.7010)#
+A <- matrix(c(A0,-A1),5,2)
+A
+A <- cbind(c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010), c(.9511, -1.6435, 2.3655, -2.9154, 3.7010))
+A
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+ortonormalProj <- function(U) invRoot(U%*%t(U)) %*% U#
+#
+invRoot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(-1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+A <- cbind(c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010), c(.9511, -1.6435, 2.3655, -2.9154, 3.7010))#
+#
+# Initial rotation#
+theta = 0#
+U <- t(matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2))#
+#
+for(i in 1:1000){#
+	U <- U + 0.1 * gradJ(A,U)#
+	U <- ortonormalProj(U)#
+}
+U
+U = diag(c(1,1))
+for(i in 1:1000){#
+	U <- U + 0.1 * gradJ(A,U)#
+	U <- ortonormalProj(U)#
+}
+U
+U = diag(c(1,1))
+U <- diag(dim(A)[2])
+U
+gradJ(U,A)
+gradJ(A,U)
+grad(quarti,A=A,U)
+grad(quarti,A=A,U)
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(-1/2)) %*% t(eig$vectors))#
+}
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+ortonormalProj <- function(U) invRoot(U%*%t(U)) %*% U#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(-1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+A <- cbind(c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010), c(.9511, -1.6435, 2.3655, -2.9154, 3.7010))#
+#
+# Initial rotation#
+theta = 0#
+U <- t(matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2))#
+#
+for(i in 1:1000){#
+	U <- U + 0.1 * gradJ(A,U)#
+	U <- solve(mroot(U%*%t(U))) %*% U#
+}
+solve(mroot(U%*%t(U))) %*% U
+U
+U <- diag(c(1,1))
+solve(mroot(U%*%t(U))) %*% U
+theta = 0#
+U <- t(matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2))
+U
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+ortonormalProj <- function(U) invRoot(U%*%t(U)) %*% U#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(-1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+A <- cbind(c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010), c(.9511, -1.6435, 2.3655, -2.9154, 3.7010))#
+#
+# Initial rotation#
+theta = 0#
+U <- t(matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2))#
+#
+for(i in 1:1000){#
+	U <- U + 0.1 * gradJ(A,U)#
+	U <- solve(mroot(U%*%t(U))) %*% U#
+}
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+ortonormalProj <- function(U) invRoot(U%*%t(U)) %*% U#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+A <- cbind(c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010), c(.9511, -1.6435, 2.3655, -2.9154, 3.7010))#
+#
+# Initial rotation#
+theta = 0#
+U <- t(matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2))#
+#
+for(i in 1:1000){#
+	U <- U + 0.1 * gradJ(A,U)#
+	U <- solve(mroot(U%*%t(U))) %*% U#
+}
+U
+A%*%U
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+ortonormalProj <- function(U) invRoot(U%*%t(U)) %*% U#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+A <- cbind(c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010), c(.9511, -1.6435, 2.3655, -2.9154, 3.7010))#
+#
+# Initial rotation#
+theta = 0#
+U <- t(matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2))#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}
+quartimax(U,A,mu)
+mu = 0.1
+quartimax(U,A,mu)
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+ortonormalProj <- function(U) invRoot(U%*%t(U)) %*% U#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+A <- cbind(c(-.9511, -1.6435, 2.3655, -2.9154, -3.7010), c(.9511, -1.6435, 2.3655, -2.9154, 3.7010))#
+#
+# Initial rotation#
+theta = 0#
+U <- t(matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2))#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}
+quartimax(U,A,mu)
+A%*%quartimax(U,A,mu)
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)#
+# Principal component analysis#
+cov <- cov(data)#
+eig <- eigen(cov)#
+#
+attach(eig)#
+sorted <- sort(values, decreasing = T)#
+PC1 <- vectors[, values == sorted[1]]#
+PC2 <- vectors[, values == sorted[2]]#
+PC3 <- vectors[, values == sorted[3]]#
+PC4 <- vectors[, values == sorted[4]]#
+PC5 <- vectors[, values == sorted[5]]#
+detach(eig)#
+# represent data as a linear combination of the principal components:#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", PC1)#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", PC2)#
+projData$X3 <- apply(as.matrix(data), 1, "%*%", PC3)#
+projData$X4 <- apply(as.matrix(data), 1, "%*%", PC4)#
+projData$X5 <- apply(as.matrix(data), 1, "%*%", PC5)#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%PC1, c(1,0,0,0,0)%*%PC2)#
+axis2 <- 10*c(c(0,1,0,0,0)%*%PC1, c(0,1,0,0,0)%*%PC2)#
+axis3 <- 10*c(c(0,0,1,0,0)%*%PC1, c(0,0,1,0,0)%*%PC2)#
+axis4 <- 10*c(c(0,0,0,1,0)%*%PC1, c(0,0,0,1,0)%*%PC2)#
+axis5 <- 10*c(c(0,0,0,0,1)%*%PC1, c(0,0,0,0,1)%*%PC2)#
+#
+# plot:#
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[1]), y = c(0, axis1[2]), type = 'l', col = 'red')#
+points(x = c(0, axis2[1]), y = c(0, axis2[2]), type = 'l', col = 'red')#
+points(x = c(0, axis3[1]), y = c(0, axis3[2]), type = 'l', col = 'red')#
+points(x = c(0, axis4[1]), y = c(0, axis4[2]), type = 'l', col = 'red')#
+points(x = c(0, axis5[1]), y = c(0, axis5[2]), type = 'l', col = 'red')#
+#
+rm(axis1, axis2, axis3, axis4, axis5,projData, PC1, PC2, PC3, PC4, PC5, cov, eig, sorted)
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)#
+# Principal component analysis#
+cov <- cov(data)#
+eig <- eigen(cov)#
+#
+attach(eig)#
+sorted <- sort(values, decreasing = T)#
+PC1 <- vectors[, values == sorted[1]]#
+PC2 <- vectors[, values == sorted[2]]#
+PC3 <- vectors[, values == sorted[3]]#
+PC4 <- vectors[, values == sorted[4]]#
+PC5 <- vectors[, values == sorted[5]]#
+detach(eig)#
+# represent data as a linear combination of the principal components:#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", PC1)#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", PC2)#
+projData$X3 <- apply(as.matrix(data), 1, "%*%", PC3)#
+projData$X4 <- apply(as.matrix(data), 1, "%*%", PC4)#
+projData$X5 <- apply(as.matrix(data), 1, "%*%", PC5)#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%PC1, c(1,0,0,0,0)%*%PC2)#
+axis2 <- 10*c(c(0,1,0,0,0)%*%PC1, c(0,1,0,0,0)%*%PC2)#
+axis3 <- 10*c(c(0,0,1,0,0)%*%PC1, c(0,0,1,0,0)%*%PC2)#
+axis4 <- 10*c(c(0,0,0,1,0)%*%PC1, c(0,0,0,1,0)%*%PC2)#
+axis5 <- 10*c(c(0,0,0,0,1)%*%PC1, c(0,0,0,0,1)%*%PC2)#
+#
+# plot:#
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[1]), y = c(0, axis1[2]), type = 'l', col = 'red')#
+points(x = c(0, axis2[1]), y = c(0, axis2[2]), type = 'l', col = 'red')#
+points(x = c(0, axis3[1]), y = c(0, axis3[2]), type = 'l', col = 'red')#
+points(x = c(0, axis4[1]), y = c(0, axis4[2]), type = 'l', col = 'red')#
+points(x = c(0, axis5[1]), y = c(0, axis5[2]), type = 'l', col = 'red')#
+#
+rm(axis1, axis2, axis3, axis4, axis5,projData, PC1, PC2, PC3, PC4, PC5, cov, eig, sorted)
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)#
+# Principal component analysis#
+cov <- cov(data)#
+eig <- eigen(cov)#
+#
+attach(eig)#
+sorted <- sort(values, decreasing = T)#
+PC1 <- vectors[, values == sorted[1]]#
+PC2 <- vectors[, values == sorted[2]]#
+PC3 <- vectors[, values == sorted[3]]#
+PC4 <- vectors[, values == sorted[4]]#
+PC5 <- vectors[, values == sorted[5]]#
+detach(eig)#
+# represent data as a linear combination of the principal components:#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", PC1)#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", PC2)#
+projData$X3 <- apply(as.matrix(data), 1, "%*%", PC3)#
+projData$X4 <- apply(as.matrix(data), 1, "%*%", PC4)#
+projData$X5 <- apply(as.matrix(data), 1, "%*%", PC5)#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%PC1, c(1,0,0,0,0)%*%PC2)#
+axis2 <- 10*c(c(0,1,0,0,0)%*%PC1, c(0,1,0,0,0)%*%PC2)#
+axis3 <- 10*c(c(0,0,1,0,0)%*%PC1, c(0,0,1,0,0)%*%PC2)#
+axis4 <- 10*c(c(0,0,0,1,0)%*%PC1, c(0,0,0,1,0)%*%PC2)#
+axis5 <- 10*c(c(0,0,0,0,1)%*%PC1, c(0,0,0,0,1)%*%PC2)#
+#
+# plot:#
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[1]), y = c(0, axis1[2]), type = 'l', col = 'red')#
+points(x = c(0, axis2[1]), y = c(0, axis2[2]), type = 'l', col = 'red')#
+points(x = c(0, axis3[1]), y = c(0, axis3[2]), type = 'l', col = 'red')#
+points(x = c(0, axis4[1]), y = c(0, axis4[2]), type = 'l', col = 'red')#
+points(x = c(0, axis5[1]), y = c(0, axis5[2]), type = 'l', col = 'red')#
+#
+rm(axis1, axis2, axis3, axis4, axis5,projData, PC1, PC2, PC3, PC4, PC5, cov, eig, sorted)
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)#
+# Principal component analysis#
+cov <- cov(data)#
+eig <- eigen(cov)#
+#
+attach(eig)#
+sorted <- sort(values, decreasing = T)#
+PC1 <- vectors[, values == sorted[1]]#
+PC2 <- vectors[, values == sorted[2]]#
+PC3 <- vectors[, values == sorted[3]]#
+PC4 <- vectors[, values == sorted[4]]#
+PC5 <- vectors[, values == sorted[5]]#
+detach(eig)#
+# represent data as a linear combination of the principal components:#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", PC1)#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", PC2)#
+projData$X3 <- apply(as.matrix(data), 1, "%*%", PC3)#
+projData$X4 <- apply(as.matrix(data), 1, "%*%", PC4)#
+projData$X5 <- apply(as.matrix(data), 1, "%*%", PC5)#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%PC1, c(1,0,0,0,0)%*%PC2)#
+axis2 <- 10*c(c(0,1,0,0,0)%*%PC1, c(0,1,0,0,0)%*%PC2)#
+axis3 <- 10*c(c(0,0,1,0,0)%*%PC1, c(0,0,1,0,0)%*%PC2)#
+axis4 <- 10*c(c(0,0,0,1,0)%*%PC1, c(0,0,0,1,0)%*%PC2)#
+axis5 <- 10*c(c(0,0,0,0,1)%*%PC1, c(0,0,0,0,1)%*%PC2)#
+#
+# plot:#
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[1]), y = c(0, axis1[2]), type = 'l', col = 'red')#
+points(x = c(0, axis2[1]), y = c(0, axis2[2]), type = 'l', col = 'red')#
+points(x = c(0, axis3[1]), y = c(0, axis3[2]), type = 'l', col = 'red')#
+points(x = c(0, axis4[1]), y = c(0, axis4[2]), type = 'l', col = 'red')#
+points(x = c(0, axis5[1]), y = c(0, axis5[2]), type = 'l', col = 'red')#
+#
+rm(axis1, axis2, axis3, axis4, axis5,projData, PC1, PC2, PC3, PC4, PC5, cov, eig, sorted)
+ls()
+rm(list = ls())
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)#
+# Principal component analysis#
+cov <- cov(data)#
+eig <- eigen(cov)#
+#
+attach(eig)#
+sorted <- sort(values, decreasing = T)#
+PC1 <- vectors[, values == sorted[1]]#
+PC2 <- vectors[, values == sorted[2]]#
+PC3 <- vectors[, values == sorted[3]]#
+PC4 <- vectors[, values == sorted[4]]#
+PC5 <- vectors[, values == sorted[5]]#
+detach(eig)#
+# represent data as a linear combination of the principal components:#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", PC1)#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", PC2)#
+projData$X3 <- apply(as.matrix(data), 1, "%*%", PC3)#
+projData$X4 <- apply(as.matrix(data), 1, "%*%", PC4)#
+projData$X5 <- apply(as.matrix(data), 1, "%*%", PC5)#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%PC1, c(1,0,0,0,0)%*%PC2)#
+axis2 <- 10*c(c(0,1,0,0,0)%*%PC1, c(0,1,0,0,0)%*%PC2)#
+axis3 <- 10*c(c(0,0,1,0,0)%*%PC1, c(0,0,1,0,0)%*%PC2)#
+axis4 <- 10*c(c(0,0,0,1,0)%*%PC1, c(0,0,0,1,0)%*%PC2)#
+axis5 <- 10*c(c(0,0,0,0,1)%*%PC1, c(0,0,0,0,1)%*%PC2)#
+#
+# plot:#
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[1]), y = c(0, axis1[2]), type = 'l', col = 'red')#
+points(x = c(0, axis2[1]), y = c(0, axis2[2]), type = 'l', col = 'red')#
+points(x = c(0, axis3[1]), y = c(0, axis3[2]), type = 'l', col = 'red')#
+points(x = c(0, axis4[1]), y = c(0, axis4[2]), type = 'l', col = 'red')#
+points(x = c(0, axis5[1]), y = c(0, axis5[2]), type = 'l', col = 'red')#
+#
+rm(axis1, axis2, axis3, axis4, axis5,projData, PC1, PC2, PC3, PC4, PC5, cov, eig, sorted)
+ls()
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)#
+# Principal component analysis#
+cov <- cov(data)#
+eig <- eigen(cov)#
+#
+attach(eig)#
+sorted <- sort(values, decreasing = T)#
+PC1 <- vectors[, values == sorted[1]]#
+PC2 <- vectors[, values == sorted[2]]#
+PC3 <- vectors[, values == sorted[3]]#
+PC4 <- vectors[, values == sorted[4]]#
+PC5 <- vectors[, values == sorted[5]]#
+detach(eig)#
+# represent data as a linear combination of the principal components:#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", PC1)#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", PC2)#
+projData$X3 <- apply(as.matrix(data), 1, "%*%", PC3)#
+projData$X4 <- apply(as.matrix(data), 1, "%*%", PC4)#
+projData$X5 <- apply(as.matrix(data), 1, "%*%", PC5)#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%PC1, c(1,0,0,0,0)%*%PC2)#
+axis2 <- 10*c(c(0,1,0,0,0)%*%PC1, c(0,1,0,0,0)%*%PC2)#
+axis3 <- 10*c(c(0,0,1,0,0)%*%PC1, c(0,0,1,0,0)%*%PC2)#
+axis4 <- 10*c(c(0,0,0,1,0)%*%PC1, c(0,0,0,1,0)%*%PC2)#
+axis5 <- 10*c(c(0,0,0,0,1)%*%PC1, c(0,0,0,0,1)%*%PC2)#
+#
+# plot:#
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[1]), y = c(0, axis1[2]), type = 'l', col = 'red')#
+points(x = c(0, axis2[1]), y = c(0, axis2[2]), type = 'l', col = 'red')#
+points(x = c(0, axis3[1]), y = c(0, axis3[2]), type = 'l', col = 'red')#
+points(x = c(0, axis4[1]), y = c(0, axis4[2]), type = 'l', col = 'red')#
+points(x = c(0, axis5[1]), y = c(0, axis5[2]), type = 'l', col = 'red')#
+#
+rm(axis1, axis2, axis3, axis4, axis5,projData,  cov, eig, sorted)
+PC1
+c(1,0,0,0,0)%*%PC1
+PC1%*%c(1,0,0,0,0)
+cov <- cov(data)#
+eig <- eigen(cov)
+eig
+rm(list = ls())
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}#
+#
+# Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)
+data
+U <- diag(dim(data))
+U
+U <- diag(dim(data)[2])
+U
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}#
+#
+# Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+#
+U <- diag(dim(data)[2])
+U
+A
+data
+quartimax(U,A,0.1)
+quartimax(U,data,0.1)
+as.matrix(data)
+quartimax(U,as.matrix(data),0.1)
+A*quartimax(U,as.matrix(data),0.1)
+as.matrix(A)%*%quartimax(U,as.matrix(data),0.1)
+as.matrix(data)%*%quartimax(U,as.matrix(data),0.1)
+quartimax(U,as.matrix(data),0.1)
+ls()
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)#
+# Principal component analysis#
+cov <- cov(data)#
+eig <- eigen(cov)#
+#
+attach(eig)#
+sorted <- sort(values, decreasing = T)#
+PC1 <- vectors[, values == sorted[1]]#
+PC2 <- vectors[, values == sorted[2]]#
+PC3 <- vectors[, values == sorted[3]]#
+PC4 <- vectors[, values == sorted[4]]#
+PC5 <- vectors[, values == sorted[5]]#
+detach(eig)#
+# represent data as a linear combination of the principal components:#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", PC1)#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", PC2)#
+projData$X3 <- apply(as.matrix(data), 1, "%*%", PC3)#
+projData$X4 <- apply(as.matrix(data), 1, "%*%", PC4)#
+projData$X5 <- apply(as.matrix(data), 1, "%*%", PC5)#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%PC1, c(1,0,0,0,0)%*%PC2)#
+axis2 <- 10*c(c(0,1,0,0,0)%*%PC1, c(0,1,0,0,0)%*%PC2)#
+axis3 <- 10*c(c(0,0,1,0,0)%*%PC1, c(0,0,1,0,0)%*%PC2)#
+axis4 <- 10*c(c(0,0,0,1,0)%*%PC1, c(0,0,0,1,0)%*%PC2)#
+axis5 <- 10*c(c(0,0,0,0,1)%*%PC1, c(0,0,0,0,1)%*%PC2)#
+#
+# plot:#
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[1]), y = c(0, axis1[2]), type = 'l', col = 'red')#
+points(x = c(0, axis2[1]), y = c(0, axis2[2]), type = 'l', col = 'red')#
+points(x = c(0, axis3[1]), y = c(0, axis3[2]), type = 'l', col = 'red')#
+points(x = c(0, axis4[1]), y = c(0, axis4[2]), type = 'l', col = 'red')#
+points(x = c(0, axis5[1]), y = c(0, axis5[2]), type = 'l', col = 'red')#
+#
+rm(axis1, axis2, axis3, axis4, axis5,projData,  cov, eig, sorted)
+PC1
+A <- cbind(PC1,PC2)
+A
+U <- diag(c(1,1))
+A%*%U
+quartimax(U,A,0.1)
+A%*%quartimax(U,A,0.1)
+Load data:#
+data <- t(read.table("data.txt"))#
+row.names(data) <- c(1:10)#
+data <- data.frame(data)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+data <- data.frame(data)#
+# Principal component analysis#
+cov <- cov(data)#
+eig <- eigen(cov)#
+#
+attach(eig)#
+sorted <- sort(values, decreasing = T)#
+PC1 <- vectors[, values == sorted[1]]#
+PC2 <- vectors[, values == sorted[2]]#
+PC3 <- vectors[, values == sorted[3]]#
+PC4 <- vectors[, values == sorted[4]]#
+PC5 <- vectors[, values == sorted[5]]#
+detach(eig)#
+#
+write.table(cbind(PC1, PC2), "PC"
+)
+PC <- t(read.table("PC"))#
+PC <- data.frame(PC)
+PC
+U <- diag(dim(PC)[2])
+U
+PC <- read.table("PC")#
+PC <- data.frame(PC)
+PC
+A <- read.table("PC")#
+A <- data.frame(A)#
+#
+U <- diag(dim(A)[2])
+U
+mu = 0.1#
+quartimax(U,A,mu)
+mu = 0.1#
+quartimax(U,as.matrix(A),mu)
+mu = 0.1#
+quartimax(U,t(as.matrix(A)),mu)
+mu = 0.1#
+quartimax(U,as.matrix(A),mu)
+as.matrix(A)
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}#
+#
+# Load data:#
+A <- read.table("PC")#
+A <- data.frame(A)#
+#
+U <- diag(dim(A)[2])#
+#
+mu = 0.1#
+quartimax(U,as.matrix(A),mu)
+A%*%quartimax(U,as.matrix(A),mu)
+A
+as.matrix(A)%*%quartimax(U,as.matrix(A),mu)
+as.matrix(A)
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}#
+#
+# Load data:#
+A <- read.table("PC")#
+A <- data.frame(A)#
+#
+U <- diag(dim(A)[2])#
+#
+mu = 0.1#
+A <- as.matrix(A)%*%quartimax(U,as.matrix(A),mu)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", data[,1])#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", data[,2])
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}#
+#
+# Load data:#
+A <- read.table("PC")#
+A <- data.frame(A)#
+#
+U <- diag(dim(A)[2])#
+#
+mu = 0.1#
+A <- as.matrix(A)%*%quartimax(U,as.matrix(A),mu)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+projData <- data#
+projData$X1 <- apply(as.matrix(data), 1, "%*%", A[,1])#
+projData$X2 <- apply(as.matrix(data), 1, "%*%", A[,2])
+apply(as.matrix(data), 1, "%*%", A[, 1])
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}#
+#
+# Load data:#
+A <- read.table("PC")#
+A <- data.frame(A)#
+#
+U <- diag(dim(A)[2])#
+#
+mu = 0.1#
+A <- as.matrix(A)%*%quartimax(U,as.matrix(A),mu)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+projData <- data#
+projData$X1 <- apply(data, 1, "%*%", A[,1])#
+projData$X2 <- apply(data, 1, "%*%", A[,2])
+apply(data, 1, "%*%", A[,1])
+data
+A[,1]
+data[1,]%*%A[,1]
+projData$X1 <- apply(data, 1, "%*%", A[,1])
+projData$X1
+projData$X2 <- apply(data, 1, "%*%", A[,2])
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim =
+c(-8,8))
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}#
+#
+# Load data:#
+A <- read.table("PC")#
+A <- data.frame(A)#
+#
+U <- diag(dim(A)[2])#
+#
+mu = 0.1#
+A <- as.matrix(A)%*%quartimax(U,as.matrix(A),mu)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+projData <- data#
+projData$X1 <- apply(data, 1, "%*%", A[,1])#
+projData$X2 <- apply(data, 1, "%*%", A[,2])#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%A[,1], c(1,0,0,0,0)%*%A[,2])#
+axis2 <- 10*c(c(0,1,0,0,0)%*%A[,1], c(0,1,0,0,0)%*%A[,2])#
+axis3 <- 10*c(c(0,0,1,0,0)%*%A[,1], c(0,0,1,0,0)%*%A[,2])#
+axis4 <- 10*c(c(0,0,0,1,0)%*%A[,1], c(0,0,0,1,0)%*%A[,2])#
+axis5 <- 10*c(c(0,0,0,0,1)%*%A[,1], c(0,0,0,0,1)%*%A[,2])#
+plot(projData$X1, projData$X2, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[1]), y = c(0, axis1[2]), type = 'l', col = 'red')#
+points(x = c(0, axis2[1]), y = c(0, axis2[2]), type = 'l', col = 'red')#
+points(x = c(0, axis3[1]), y = c(0, axis3[2]), type = 'l', col = 'red')#
+points(x = c(0, axis4[1]), y = c(0, axis4[2]), type = 'l', col = 'red')#
+points(x = c(0, axis5[1]), y = c(0, axis5[2]), type = 'l', col = 'red')
+quarti <- function(U, A) sum(sum((A%*%U)^4))#
+#
+mroot <- function(W){#
+	eig <- eigen(W)#
+	return(eig$vectors %*% diag(eig$values^(1/2)) %*% t(eig$vectors))#
+}#
+#
+gradJ <- function(A,U) 4 * t(A) %*% (A %*% U)**3#
+#
+quartimax <- function(U,A,mu){#
+	for(i in 1:1000){#
+		U <- U + mu * gradJ(A,U)#
+		U <- solve(mroot(U%*%t(U))) %*% U#
+	}#
+	return(U)#
+}#
+#
+# Load data:#
+A <- read.table("PC")#
+A <- data.frame(A)#
+#
+U <- diag(dim(A)[2])#
+#
+mu = 0.1#
+A <- as.matrix(A)%*%quartimax(U,as.matrix(A),mu)#
+# Center data:#
+data <- as.matrix(data)#
+data <- t(apply(data,1,"-", colMeans(data)))#
+projData <- data#
+projData$X1 <- apply(data, 1, "%*%", A[,1])#
+projData$X2 <- apply(data, 1, "%*%", A[,2])#
+#
+# represent the coordinate axes as a linear combination of the PCs#
+axis1 <- 10*c(c(1,0,0,0,0)%*%A[,1], c(1,0,0,0,0)%*%A[,2])#
+axis2 <- 10*c(c(0,1,0,0,0)%*%A[,1], c(0,1,0,0,0)%*%A[,2])#
+axis3 <- 10*c(c(0,0,1,0,0)%*%A[,1], c(0,0,1,0,0)%*%A[,2])#
+axis4 <- 10*c(c(0,0,0,1,0)%*%A[,1], c(0,0,0,1,0)%*%A[,2])#
+axis5 <- 10*c(c(0,0,0,0,1)%*%A[,1], c(0,0,0,0,1)%*%A[,2])#
+plot(projData$X2, projData$X1, asp = 1, col = 'blue', pch=16, xlim = c(-8,8), ylim = c(-8,8))#
+abline(v =0)#
+abline(h = 0)#
+points(x = c(0, axis1[2]), y = c(0, axis1[1]), type = 'l', col = 'red')#
+points(x = c(0, axis2[2]), y = c(0, axis2[1]), type = 'l', col = 'red')#
+points(x = c(0, axis3[2]), y = c(0, axis3[1]), type = 'l', col = 'red')#
+points(x = c(0, axis4[2]), y = c(0, axis4[1]), type = 'l', col = 'red')#
+points(x = c(0, axis5[2]), y = c(0, axis5[1]), type = 'l', col = 'red')
+rm(list = ls())
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/ex1/ex11.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/ex1/ex12.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/ex1/ex13.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/ex1/ex14.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/ex1/ex14.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/ex1/ex15.r")
+dir()
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/git/uml/ex1Jussi/ex11Jussi.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/git/uml/ex1Jussi/ex12Jussi.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/git/uml/ex1Jussi/ex13Jussi.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/git/uml/ex1Jussi/ex14Jussi.r")
+source("/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/git/uml/ex1Jussi/ex15Jussi.r")

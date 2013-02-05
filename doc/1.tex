@@ -1,13 +1,13 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,hyperref,verbatim,listings,graphicx,subfigure,fullpage}
+\usepackage{amssymb, amsmath,hyperref,verbatim,listings,graphicx,subfigure,fullpage}
 
 \begin{document}
 
 \title{UML computer project 1}
 \author{
 Juha-Antti Isojärvi\\
-???
+013455341
 \and
 Mikko Sysikaski\\
 013573016\\
@@ -16,8 +16,36 @@ Master student}
 \date{}
 \maketitle
 
-\section{Exercise 1}
-\subsection{}
+\section{Exercise set 1}
+\subsection{Exercise 1}
+First we were given a plot of twodimensional data, and were asked to
+create similar data artificially. The distribution of the data looked
+similar to the twodimensional gaussian or multinormal
+distributions. Therefore we decided to generate points from a
+gaussian distribution. 
+
+A random vector $X = (X_1, X_2, \dots, X_n)$ is standard normally
+distributed, denoted $X \sim N_n(0,I)$, if its components $X_i$ are independent and normally
+distributed with zero mean and unit variance. It is true, that the
+mean vector $E(X) = 0$ and covariance matrix $Cov(X) = I_n$.
+
+Now if a random vector 
+\[
+X = AU + \mu
+\] 
+is defined for some $U \sim N_n(0,I)$, and fixed $A \in \mathbb{R}^{m \times n}$
+and $\mu \in \mathbb{R}^n$, then it is true that $E(X) = \mu$ and
+$Cov(X) = AA^T$.
+
+A random vector $X$ is multinormally
+distributed, if it has the same
+distribution as the random vector
+\[
+X = AU + \mu.
+\]
+Then it has mean $E(X) = \mu$ and covariance $Cov(X) = AA^T$. Denote
+$Cov(X) \dot \Sigma$. 
+
 The plots are shown in Figure~\ref{fig:scatter}. The covariance matrices where generated with the Stetson-Harrison method.
 \subsection{}
 The principal components of the first and the third point set are shown in Figure~\ref{fig:pcadir}.

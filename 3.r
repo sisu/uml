@@ -69,6 +69,17 @@ plotapprox <- function() {
 	ordered <- resmat[,order]
 	visual(t(ordered), cc)
 }
+apprerror <- function(d, n) {
+	cs <- pc$rotation[,1:n]
+	reduced <- t(d$x) %*% cs
+	m <- t(reduced %*% t(cs))
+	sum((m-d$x)**2) / dim(d$x)[2]
+}
+ploterror <- function() {
+	cs <- 2^(0:7)
+	errs <- sapply(cs, function(i) apprerror(tdata, i))
+	plot(cs, errs, xlab="Number of principal components", ylab="Average reconstruction error", t='l')
+}
 
 noisyt <- read.table('noisyDigits.txt')
 noisy <- preprocess(noisyt)
@@ -90,7 +101,7 @@ mkpdfs <- function() {
 	visual(t(data$x)[1:n,])
 	dev.off()
 
-	pdf('doc/pcavar.pdf', width=7, height=7)
+	pdf('doc/pcavar.pdf', width=5, height=5)
 	plotpcadev()
 	dev.off()
 
@@ -100,6 +111,10 @@ mkpdfs <- function() {
 
 	png('doc/digitreduce.png', width=w, height=h)
 	plotapprox()
+	dev.off()
+
+	pdf('doc/error.pdf', width=5, height=5)
+	ploterror()
 	dev.off()
 
 	png('doc/noisy.png', width=w, height=h)

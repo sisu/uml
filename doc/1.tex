@@ -20,8 +20,8 @@ Master student}
 
 \section{Exercise set 1}
 \subsection{Exercise 1}
-First we were given a plot of twodimensional data, and were asked to
-create similar data artificially. The distribution of the data looked
+First we were given plots of twodimensional data, and were asked to
+create similar data artificially. The distribution of the data in the plots looked
 similar to the twodimensional gaussian or multinormal
 distributions. Therefore we decided to generate points from a
 gaussian distribution. 
@@ -71,16 +71,16 @@ distribution $N_2(0,AA^T)$, where $A \dot{=} R_\theta D$.
 
 The resulting data cloud is centered at zero, and has elliptical
 shape. The main axis of this data cloud has angle $\theta$ measured
-form the $x$-axis. Our resulting four generated artificial data can be
+form the $x$-axis. The spread of the cloud is determined by the
+dilation matrix $D$. Our resulting four generated artificial data can be
 seen plotted in Figure~\ref{fig:scatter}. 
 
 This was a simple method for generating artificial twodimensional
 gaussian data, with easy control of the direction and elongation of
 the data cloud. Of course there are other methods as well. In the
-$MASS$-package of $R$ there is a function mvrnorm, which takes as
+MASS-package of R there is a function rmvnorm, which takes as
 inputs the mean vector and the covariance matrix and generates
-gaussian data. The method implemented is the so called
-Stetson-Harrison method, and we think it may be just what we used. We
+gaussian data. We
 didn't feel the need to get further into the details of this
 method. Manipulation of the direction and the elongation of the data
 cloud is always achieved by manipulation of the covariance matrix, as
@@ -89,10 +89,41 @@ in the method we described.
 Another way of manipulating the direction and elongation of the data
 cloud is by 'inverse' eigenvalue decomposition of the covariance
 matrix. About this method more in section \ref{sec:subsection4}.
+
 \subsection{Exercise 2}
-The principal components of the first and the third point set are shown in Figure~\ref{fig:pcadir}.
+
+Next, we were given the task to perform principal component analysis
+on two of the generated artificial data. We chose the data seen in
+Figure \ref{fig:scatter} in the upper left and lower left frame.
+
+In order to do principal component analysis, we first need the
+covariance matrix of the data. In the context of PCA one doesn't have
+prior knowledge of the underlying distribution, and therefore we used
+the standard method of computing a sample covariance matrix. In R this
+can be done with the function cov. 
+
+Next we did eigenvalue decomposition of the covariance matrix. In the
+lecture notes it is proven that the first principal component is the
+eigenvector corresponding to the largest eigenvalue, the second PC the
+eigenvector corresponding to the second largest eigenvector, and so
+on. In this case of twodimensional data there are only two principal
+components. The directions of the principal components of the point
+sets are shown in Figure~\ref{fig:pcadir}. 
+
 \subsection{Exercise 3}
-The Figure~\ref{fig:histo} contains the histograms obtained by projecting the points of the first point set on its principal components.
+In the third exercise of this set, we needed to project one of the artificial
+data we created on each of its principal components. Histograms of the
+projected data can be seen in Figure~\ref{fig:histo}. The variance of
+the projected data should be equal to the eigenvalue of the
+corresponding eigenvector of the covariance matrix of the original
+data. This was verified after computing the variance of the projected
+data and the eigenvalue decomposition of the covariance matrix:
+\begin{verbatim}
+> var
+[1] 4.020849 1.002429
+> eig$values
+[1] 4.020849 1.002429
+\end{verbatim}
 \subsection{Exercise 4}\label{sec:subsection4}
 \subsection{Exercise 5}
 

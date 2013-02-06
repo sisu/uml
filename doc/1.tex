@@ -124,6 +124,8 @@ The Figure~\ref{fig:histo} contains the histograms obtained by projecting the po
 	\caption{} \label{fig:proj}
 \end{figure}
 
+
+\clearpage
 \section{Exercise 2}
 \newcommand{\X}{\ensuremath{\mathbf{X}}}
 \subsection{}
@@ -158,34 +160,80 @@ The quartimax applied to the first two principal components of \X. Figure~\ref{f
 	\caption{The projection to principal components after rotating them using the quartimax algorithm to have the original variables as close to the new coordinate axes as possible.}\label{fig:qmax}
 \end{figure}
 
-\section{Exercise 3}
-\subsection{}
-\subsection{}
-\subsection{}
-\subsection{}
 
+\clearpage
+\section{Exercise 3}
+\subsection{}\label{sec:31}
+The data was preprocessed by first looking at each digit separately.
+For each digit we removed the average of the values and normalized then to unit norm.
+Finally we again took all the images together and centered each variable to have mean 0.
+The first 20 of the digits before and after preprocessing are displayed in Figure~\ref{fig:digits}.
 \begin{figure}\centering
 	\includegraphics[scale=0.4]{digits}
 	\includegraphics[scale=0.4]{digitspre}
-	\caption{}\label{fig:digits}
+	\caption{Visualization of the first 20 digits of the data before and after preprocessing.
+	The preprocessing centerss and normalizes each digit and centers each variable.}\label{fig:digits}
 \end{figure}
+
+\subsection{}
+The variances of the digit data explained by the number of principal components are displayed in Figure~\ref{fig:pcavar}.
+The same figure displays visualizations of the actual principal components.
+Because the principal components are vectors of the same length as each digit vector, they can be visualized the samy way as the digits.
+As can be expected, the visualization shows that the principal components have non-zero values mostly near the center of the images, where the digits differ a lot from each other.
 \begin{figure}\centering
-	\includegraphics[scale=0.4]{pcavar}
+	\includegraphics[scale=0.6]{pcavar}
 	\includegraphics[scale=0.4]{pcanums}
-	\caption{}\label{fig:pcavar}
+	\caption{Left: the proportion of variance explained by the number of principal components.
+	Right: visualization of the principal components.
+The colors are scaled such that black and white parts of the images represend negative and positive valus in the PCs while grey pixels represent zero-values.}\label{fig:pcavar}
 \end{figure}
+
+\subsection{}
+Let $Y$ be the $784\times 1000$ matrix obtained from the original matrix $X$ by preprocessing it as described in Section~\ref{sec:31}.
+Denote by $P$ the $784\times 784$ matrix containing the principal components of $Y$ as its columns, and by $P^i$ its first $i$ columns.
+We can reduce the dimension of $Y$ by multiplying it with $P$: $R^i=Y^TP^i$.
+We can then reproduce an approximation to the original matrix by multiplying again by the transpose of $P^i$: $$(Y^i)^T=R^i(P^i)^T=Y^TP^i(P^i)^T.$$
+The reconstruction error of a data vector is defined as the squared distance to the original data. The average error is the average of the errors of all the considered data vectors:
+$$Err_i = \frac{1}{n}\sum_{j=1}^{n}||Y_{*j}-Y^i_{*j}||^2$$ where $Y_{*j}$ denotes the $j$th column of $Y$. The principal components minimize the reconstruction error of this dimension reduction.
+
+The average reconstruction errors for different numbers of different numbers of principal components are displayed in Figure~\ref{fig:reduce}.
+It can be seen that the error goes down quickly during about the first 20 components but the differences become smaller after that.
+
+Figure~\ref{fig:reduce} displays the result of doing dimension reduction and reconstruction for the 10 first digits using different numbers of principal components.
+All the digits remain readable after reducing them to 16 first principal components.
+With much fewer components, it becomes impossible to distinguish eg. 4 and 9 from each other.
+
+The dimension reduction performed by projection to the principal component directions is also a form of lossy compression, because it represents approximately the same images using a smaller amount of values.
+The method does not always reduce the total data size, as we need to store the first principal components to reproduce the data.
+The size of the PCA matrix doesn't depend on the number of data vectors, only on the number of variables, so we can save space if we have a very large amount of similarly distributed data.
+The data vectors should follow a similar distribution so that all of them can be recreated accurately using the same principal components.
+
 \begin{figure}\centering
+	\includegraphics[scale=0.5]{error}
 	\includegraphics[scale=\sscale]{digitreduce}
-	\caption{}\label{fig:reduce}
+	\caption{Left: the average reconstruction error of dimension reduction as a function of the number of principal components.
+	Right: The first 10 digits after reducing them to 1, 2, 4, 8, 16, 32, 64 and 128 dimensional subspaces spanned by the first principal components.
+The rightmost column contains the original digits.
+The digits where preprocessed before the reduction and the preprocessing steps where inversed after the reduction.}\label{fig:reduce}
 \end{figure}
+
+\subsection{}
+
+The dimension reduction with PCA can be used as a denoising method.
+As we saw, digit images can be represented by a small number of principal component directions, so we can ignore all the variance in other directions as noise.
+Since we use only a small number of principal components, the subspace spanned by their directions is only a small fraction of the whole space, so we ignore a large amounf of the noise.
+Note that the principal components we use are the principal components of the non-noisy digit images, because we don't want the components to represent the noise but the actual signal parts of the data.
+
+Figure~\ref{fig:denoise} displays the result of denoising the noisy images by projecting them to some of the first principal components. It can be seen that many images are much more readable than the original ones when reduction is done with 16 components. With 8 components some digits become even clearer, but many also become too blurry to recognize. With 32 components most digits are quite hard to read, as much of the noise still remains.
+
 \begin{figure}\centering
-\newcommand{\dns}{0.4}
-	\includegraphics[scale=\dns]{noisy}
-	\includegraphics[scale=\dns]{denoise8}
-	\includegraphics[scale=\dns]{denoise16}
-	\includegraphics[scale=\dns]{denoise32}
+\newcommand{\dns}{0.45}
+\subfigure[Original data]{\includegraphics[scale=\dns]{noisy}\label{dno}}
+\subfigure[Reduction using 8 components]{\includegraphics[scale=\dns]{denoise8}\label{dn8}}
+\subfigure[Reduction using 16 components]{\includegraphics[scale=\dns]{denoise16}\label{dn16}}
+\subfigure[Reduction using 32 components]{\includegraphics[scale=\dns]{denoise32}\label{dn32}}
 %	\includegraphics[scale=\dns]{denoise64}
-	\caption{}\label{fig:denoise}
+\caption{The result of denoising noisy digit images using dimension reduction. The images are denoised by projecting them to low-dimensional subspace spanned by the first principal components of non-noisy digit images. The image~\ref{dno} contains the original images and the images~\ref{dn8},\ref{dn16},\ref{dn32} display the result of reduction to 8, 16 and~32 components respectively.}\label{fig:denoise}
 \end{figure}
 
 \end{document}

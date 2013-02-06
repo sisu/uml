@@ -157,9 +157,9 @@ data and the eigenvalue decomposition of the covariance matrix:
 
 
 \clearpage
-\section{Exercise 2}
+\section{Exercise set 2}
 \newcommand{\X}{\ensuremath{\mathbf{X}}}
-\subsection{}
+\subsection{Exercise 1}
 The task was to do primary component analysis on the matrix
 $$ X =
 \begin{pmatrix}
@@ -183,7 +183,7 @@ In other words, a short segment is an implication that the original component is
 The red lines are the projections of the original coordinate axes.}\label{fig:42}
 \end{figure}
 
-\subsection{}
+\subsection{Exercise 2}
 The eigenvalues $\lambda_i$ of the covariance matrix can be interpreted as the proportions of variance explained by each principal component.
 Thus the total amount of variance explained by the first $k$ principal components is equal to $$ \frac{\sum_{i=1}^k\lambda_i}{\sum_{i=1}^n\lambda_i}. $$
 
@@ -195,7 +195,7 @@ It can be seen that the projection to the first two components in Figure~\ref{fi
 	\caption{The proprotion of the variance explained by using only some of the principal components.}\label{fig:varamount}
 \end{figure}
 
-\subsection{}
+\subsection{Exercise 3}
 In factor analysis we typically want to describe the data using components such that the projections of the original variables to the components contain mostly (approximately) zero values, as that makes the new components easier to interpret.
 The quartimax rule is one way to archieve this goal.
 The idea is to rotate the given components such that they span the same subspace as the original ones and maximize the sum of of fourth powers of the values of the components.
@@ -238,7 +238,7 @@ $$ A^* = AU =
 \end{pmatrix} $$
 which is identical to the example in the lecture notes, except that the values in the second column are negated.
 
-\subsection{}
+\subsection{Exercise 4}
 We applied the quartimax to the first two principal components of \X, and multiplied the components by the resulting orthogonal matrix. The result of projecting the columns of \X\ to the rotated components is displayed in Figure~\ref{fig:qmax}.
 The figure is identical to the Figure~\ref{fig:42}, only the axes are rotated.
 This highlights the fact that the rotation doesn't change the subspace spanned by the principal components, so they explain the same variance before and after the rotation.
@@ -250,8 +250,8 @@ This highlights the fact that the rotation doesn't change the subspace spanned b
 
 
 \clearpage
-\section{Exercise 3}
-\subsection{}\label{sec:31}
+\section{Exercise set 3}
+\subsection{Exercise 1}\label{sec:31}
 The data was preprocessed by first looking at each digit separately.
 For each digit we removed the average of the values and normalized then to unit norm.
 Finally we again took all the images together and centered each variable to have mean 0.
@@ -263,7 +263,7 @@ The first 20 of the digits before and after preprocessing are displayed in Figur
 	The preprocessing centerss and normalizes each digit and centers each variable.}\label{fig:digits}
 \end{figure}
 
-\subsection{}
+\subsection{Exercise 2}
 The variances of the digit data explained by the number of principal components are displayed in Figure~\ref{fig:pcavar}.
 The same figure displays visualizations of the actual principal components.
 Because the principal components are vectors of the same length as each digit vector, they can be visualized the samy way as the digits.
@@ -276,7 +276,7 @@ As can be expected, the visualization shows that the principal components have n
 The colors are scaled such that black and white parts of the images represend negative and positive valus in the PCs while grey pixels represent zero-values.}\label{fig:pcavar}
 \end{figure}
 
-\subsection{}
+\subsection{Exercise 3}
 Let $Y$ be the $784\times 1000$ matrix obtained from the original matrix $X$ by preprocessing it as described in Section~\ref{sec:31}.
 Denote by $P$ the $784\times 784$ matrix containing the principal components of $Y$ as its columns, and by $P^i$ its first $i$ columns.
 We can reduce the dimension of $Y$ by multiplying it with $P$: $R^i=Y^TP^i$.
@@ -305,7 +305,7 @@ The rightmost column contains the original digits.
 The digits where preprocessed before the reduction and the preprocessing steps where inversed after the reduction.}\label{fig:reduce}
 \end{figure}
 
-\subsection{}
+\subsection{Exercise 4}
 
 The dimension reduction with PCA can be used as a denoising method.
 As we saw, digit images can be represented by a small number of principal component directions, so we can ignore all the variance in other directions as noise.

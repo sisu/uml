@@ -141,20 +141,77 @@ $$ X =
 $$
 
 The Figure~\ref{fig:42} displays the data and the original variables projected to the first two principal components.
-\subsection{}
-The amount of variance explained as a function of the number of principal components used is displayed in Figure~\ref{fig:varamount}. It can be seen that the projection to the first two components in Figure~\ref{fig:42} convey about 90.6\% of the information of the data.
-\subsection{}
-\subsection{}
-The quartimax applied to the first two principal components of \X. Figure~\ref{fig:qmax} shows the projections of the variables on the rotated components. Note that the figure is the same as Figure~\ref{fig:42}, only rotated. The rotation doesn't change the subspace spanned by the principal components, so they explain the same amount of variance before and after rotation.
+The red lines in the figure are the projections of the original coordinate axis directions.
+The length of each red line tells how much of the component is described by the first two PCs.
+In other words, a short segment is an implication that the original component is relatively orthogonal to the principal components and quite a lot of the variance in its direction is lost in the projection.
 
 \begin{figure}\centering
 	\includegraphics[scale=\sscale]{fig42}
-	\caption{Reproduction of Figure~4.2 on the lecture notes. The blue points are the data points projected to the first two principal components. The red lines are the projections of the original coordinate axes.}\label{fig:42}
+	\caption{Reproduction of Figure~4.2 on the lecture notes.
+	The blue points are the data points projected to the first two principal components.
+The red lines are the projections of the original coordinate axes.}\label{fig:42}
 \end{figure}
+
+\subsection{}
+The eigenvalues $\lambda_i$ of the covariance matrix can be interpreted as the proportions of variance explained by each principal component.
+Thus the total amount of variance explained by the first $k$ principal components is equal to $$ \frac{\sum_{i=1}^k\lambda_i}{\sum_{i=1}^n\lambda_i}. $$
+
+The amount of variance explained as a function of the number of principal components is displayed in Figure~\ref{fig:varamount}.
+It can be seen that the projection to the first two components in Figure~\ref{fig:42} convey about 90.6\% of the data.
+
 \begin{figure}\centering
 	\includegraphics[scale=\sscale]{varamount}
 	\caption{The proprotion of the variance explained by using only some of the principal components.}\label{fig:varamount}
 \end{figure}
+
+\subsection{}
+In factor analysis we typically want to describe the data using components such that the projections of the original variables to the components contain mostly (approximately) zero values, as that makes the new components easier to interpret.
+The quartimax rule is one way to archieve this goal.
+The idea is to rotate the given components such that they span the same subspace as the original ones and maximize the sum of of fourth powers of the values of the components.
+This causes many of the components to get lined with some of the original variables, and as a result the loadings of the other variables become mostly zero.
+
+More formally, given a matrix $A$, we want to find a orthogonal matrix $U$ that maximizes
+$$ J(U) = \sum_{ij}((AU)_{ij})^4. $$
+
+We solve the problem iteratively by changing $U$ towards the gradient of $J(U)$. The partial derivative of $J$ is
+$$ \frac{\partial J(U)}{\partial U_{ab}} = \sum_i4A_{ia}((AU)_{ib})^3$$
+and thus the gradient if $\nabla J(U)=4A^T(AU)^3$.
+
+As the change may make $U$ non-orthogonal, we orthogonalize the result by the formula $(UU^T)^{-1/2}U$.
+
+To find the quartimax rotation, we thus simple start from identity matrix, and iteratively move towards the gradient and orthogonalize the result until the search converges.
+
+When applied to the matrix
+$$ A =
+\begin{pmatrix}
+	-0.9511 & 0.9511 \\
+	-1.6435 & -1.6435 \\
+	 2.3655 & 2.3655 \\
+	-2.9154 & -2.9154 \\
+	-3.7010 & 3.7010
+\end{pmatrix}$$
+we get the result
+$$ U =
+\begin{pmatrix}
+	0.7071 & 0.7071\\
+   -0.7071 & 0.7071
+\end{pmatrix} $$
+and
+$$ A^* = AU =
+\begin{pmatrix}
+	0 & -1.3450 \\
+	-2.3243 & 0\\
+	 3.3453 & 0\\
+	-4.1230 & 0\\
+		  0 & -5.2340
+\end{pmatrix} $$
+which is identical to the example in the lecture notes, except that the values in the second column are negated.
+
+\subsection{}
+We applied the quartimax to the first two principal components of \X, and multiplied the components by the resulting orthogonal matrix. The result of projecting the columns of \X to the rotated components is displayed in Figure~\ref{fig:qmax}.
+The figure is identical to the Figure~\ref{fig:42}, only the axes are rotated.
+This highlights the fact that the rotation doesn't change the subspace spanned by the principal components, so they explain the same variance before and after the rotation.
+
 \begin{figure}\centering
 	\includegraphics[scale=\sscale]{qmax}
 	\caption{The projection to principal components after rotating them using the quartimax algorithm to have the original variables as close to the new coordinate axes as possible.}\label{fig:qmax}

@@ -7,7 +7,9 @@
 \title{UML computer project 1}
 \author{
 Juha-Antti Isojärvi\\
-013455341
+013455341 \\
+Department of Mathematics and Statistics\\
+Master student
 \and
 Mikko Sysikaski\\
 013573016\\
@@ -44,15 +46,55 @@ distribution as the random vector
 X = AU + \mu.
 \]
 Then it has mean $E(X) = \mu$ and covariance $Cov(X) = AA^T$. Denote
-$Cov(X) \dot \Sigma$. 
+$Cov(X) \dot{=} \Sigma$. The multinormal distribution is denoted $X
+\sim N_n(\mu,\Sigma)$.
 
-The plots are shown in Figure~\ref{fig:scatter}. The covariance matrices where generated with the Stetson-Harrison method.
-\subsection{}
+It also holds, that if $X \sim N_n(\mu,\Sigma)$, and $B \in
+\mathbb{R}^{m \times n}$ and $b \in \mathbb{R}^m$ are fixed, then 
+\[
+BX + b \sim N_m(B\mu + b, B \Sigma B^T).
+\]
+
+Now, one way of simulating gaussian twodimensional data, is to first
+simulate twodimensional standard normally distributed, i.e. white, data, and then
+affinely transform this data by multiplying with some matrix $A \in
+\mathbb{R}^{2\times 2}$. The affinely transformed data has then a
+gaussian distribution with zero mean and covariance $AA^T$.
+
+So, we generated two random samples from a normal distribution and put these
+together to form twodimensional white data. If one would plot this
+data, one would see a spherical point cloud centered at zero. Then we
+dilated this cloud in the $y$- and $x$-axis direction with multiplying by a dilation matrix $D$ and then rotated
+the dilated data cloud with multiplying by a rotation matrix
+$R_\theta$. The result was a sample from the 
+distribution $N_2(0,AA^T)$, where $A \dot{=} R_\theta D$.
+
+The resulting data cloud is centered at zero, and has elliptical
+shape. The main axis of this data cloud has angle $\theta$ measured
+form the $x$-axis. Our resulting four generated artificial data can be
+seen plotted in Figure~\ref{fig:scatter}. 
+
+This was a simple method for generating artificial twodimensional
+gaussian data, with easy control of the direction and elongation of
+the data cloud. Of course there are other methods as well. In the
+$MASS$-package of $R$ there is a function mvrnorm, which takes as
+inputs the mean vector and the covariance matrix and generates
+gaussian data. The method implemented is the so called
+Stetson-Harrison method, and we think it may be just what we used. We
+didn't feel the need to get further into the details of this
+method. Manipulation of the direction and the elongation of the data
+cloud is always achieved by manipulation of the covariance matrix, as
+in the method we described.
+
+Another way of manipulating the direction and elongation of the data
+cloud is by 'inverse' eigenvalue decomposition of the covariance
+matrix. About this method more in section \ref{sec:subsection4}.
+\subsection{Exercise 2}
 The principal components of the first and the third point set are shown in Figure~\ref{fig:pcadir}.
-\subsection{}
+\subsection{Exercise 3}
 The Figure~\ref{fig:histo} contains the histograms obtained by projecting the points of the first point set on its principal components.
-\subsection{}
-\subsection{}
+\subsection{Exercise 4}\label{sec:subsection4}
+\subsection{Exercise 5}
 
 \newcommand{\sscale}{0.5}
 \begin{figure}\centering

@@ -60,7 +60,7 @@ mroott <- function(mat,maxit=50) {
 quartimax <- function(A) {
 	f <- 0.1
 	U <- diag(dim(A)[2])
-	for (i in 1:100) {
+	for (i in 1:1000) {
 		U <- U + f * gradJ(A,U)
 		U <- solve(mroot(U%*%t(U))) %*% U
 #		U <- U %*% solve(mroot(t(U)%*%U))

@@ -90,6 +90,16 @@ Another way of manipulating the direction and elongation of the data
 cloud is by 'inverse' eigenvalue decomposition of the covariance
 matrix. About this method more in section \ref{sec:subsection4}.
 
+\newcommand{\sscale}{0.5}
+\begin{figure}\centering
+	\includegraphics[scale=\sscale]{scatter1}
+	\includegraphics[scale=\sscale]{scatter2}
+
+	\includegraphics[scale=\sscale]{scatter3}
+	\includegraphics[scale=\sscale]{scatter4}
+	\caption{The scatter plots of the data generated in task 1.1.} \label{fig:scatter}
+\end{figure}
+
 \subsection{Exercise 2}
 
 Next, we were given the task to perform principal component analysis
@@ -110,6 +120,12 @@ on. In this case of twodimensional data there are only two principal
 components. The directions of the principal components of the point
 sets are shown in Figure~\ref{fig:pcadir}. 
 
+\begin{figure} \centering
+	\includegraphics[scale=\sscale]{pcadir1}
+	\includegraphics[scale=\sscale]{pcadir3}
+	\caption{Principal components of the first and the third point set. The first PC is the bolder line.} \label{fig:pcadir}
+\end{figure}
+
 \subsection{Exercise 3}
 In the third exercise of this set, we projected the first artificial data
 set on each of its principal components. The projection can be done simply
@@ -125,6 +141,12 @@ data and the eigenvalue decomposition of the covariance matrix:
 > eig$values
 [1] 2.873594 1.013940
 \end{verbatim}
+\begin{figure} \centering
+	\includegraphics[scale=\sscale]{histo1-1}
+	\includegraphics[scale=\sscale]{histo1-2}
+	\caption{Histograms of the 1-dimensional data obtained by projecting the points of the first point set on its principal components. There is more variance in the left histogram because the first PC explains a greater proportion of the variance than the second one.} \label{fig:histo}
+\end{figure}
+
 \subsection{Exercise 4}\label{sec:subsection4}
 Our next task was again to create a sample of twodimensional
 artificial data. This time the principal components of the data should
@@ -177,26 +199,7 @@ $0.99$, and the proportion of variance explained by the first PC was $75 \%$. Th
 average reconstruction error should be roughly the variance of the
 first principal component divided by the proportion of variance of the
 first principal component explained times  the proportion of variance
-explained subtracted from $100 %$.
-\newcommand{\sscale}{0.5}
-\begin{figure}\centering
-	\includegraphics[scale=\sscale]{scatter1}
-	\includegraphics[scale=\sscale]{scatter2}
-
-	\includegraphics[scale=\sscale]{scatter3}
-	\includegraphics[scale=\sscale]{scatter4}
-	\caption{The scatter plots of the data generated in task 1.1.} \label{fig:scatter}
-\end{figure}
-\begin{figure} \centering
-	\includegraphics[scale=\sscale]{pcadir1}
-	\includegraphics[scale=\sscale]{pcadir3}
-	\caption{Principal components of the first and the third point set. The first PC is the bolder line.} \label{fig:pcadir}
-\end{figure}
-\begin{figure} \centering
-	\includegraphics[scale=\sscale]{histo1-1}
-	\includegraphics[scale=\sscale]{histo1-2}
-	\caption{Histograms of the 1-dimensional data obtained by projecting the points of the first point set on its principal components. There is more variance in the left histogram because the first PC explains a greater proportion of the variance than the second one.} \label{fig:histo}
-\end{figure}
+explained subtracted from $100 \%$.
 \begin{figure} \centering
 	\includegraphics[scale=0.7]{vscatter}
 	\caption{Scatter plot of the data generated in task 1.4.} \label{fig:vscatter}

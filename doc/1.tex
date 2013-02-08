@@ -130,7 +130,7 @@ Our next task was again to create a sample of twodimensional
 artificial data. This time the principal components of the data should
 be the vectors 
 \[
-v_1 = \frac{1}{\sqrt{2}} [1 \; 1]^T \quad \textup{ and } \quad  v_1 = \frac{1}{\sqrt{2}} [-1 \; 1]^T,
+v_1 = \frac{1}{\sqrt{2}} [1 \; 1]^T \quad \textup{ and } \quad  v_2 = \frac{1}{\sqrt{2}} [-1 \; 1]^T,
 \]
 and their variances should be $1$ and $3$ respectively. Because the
 principal components are the eigenvectors of the covariance matrix of
@@ -145,6 +145,23 @@ one could have used, for example, Cholemskys decomposition to get
 a matrix $A$ such that $\Sigma = AA^T$, and again generate a white
 sample and multiply it with $A$ to get the same result, as with rmvnorm.}. The
 result can be seen in Figure~\ref{fig:vscatter}. 
+
+The covariance matrix of the generated data is
+$\left(\begin{smallmatrix}
+	2.013414 & -0.927215\\
+	-0.927215 & 1.874120
+\end{smallmatrix}\right)$. The eigenvectors of the covariance are the principal components, so as expected, they are close to $v_1$ and $v_2$ (expect sign-reversed in case of $v_1$), and their corresponding eigenvalues are close to the specified variances 3 and 1.
+\begin{verbatim}
+> eigen(cov(data))
+$values
+[1] 2.873594 1.013940
+
+$vectors
+           [,1]       [,2]
+[1,] -0.7331108 -0.6801092
+[2,]  0.6801092 -0.7331108
+\end{verbatim}
+
 \subsection{Exercise 5}
 Now that a sample was created we were asked to do dimension reduction
 of the data so that the reconstruction error is minimized. The

@@ -2,7 +2,7 @@
 
 # creates data:
 theta = pi/4
-V = matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2)  #
+V = matrix(c(cos(theta), sin(theta), -sin(theta), cos(theta)),2,2)  #
 Lambda = diag(c(1,3),2,2) # The eigenvalues are the variances of the PC's
 Sigma = V%*%Lambda%*%t(V)
 mean <- c(0,0)

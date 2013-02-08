@@ -190,15 +190,21 @@ of the data so that the reconstruction error is minimized. The
 dimension of the data was 2, so we could reduce the dimension only by
 one. The reconstruction error of the data is minimized by doing PCA
 and then reducing the dimension by projecting the data on the line
-spanned by the principal component. 
-
+spanned by the principal component.
+The 1-dimensional values can then be projected back two 2 dimensions by multiplying each of them with the same vector that was used in the projection.
 In Figure~\ref{fig:proj} the first 50 points of both dimension reduced
 and unchanged data can be seen plotted as well as the correspondence
-between the points. The average of the reconstruction error was
-$0.99$, and the proportion of variance explained by the first PC was $75 \%$. The
-average reconstruction error should be roughly the variance of the
+between the points.
+
+The average reconstruction error is defined as
+$$ Err = E(X-X_{red}$$
+where $X_{red}$ is the result of doing dimension reduction and projecting the result back to the original space.
+The average of the reconstruction error using the first principal component was
+$1.01$, and the proportion of variance explained by the first PC was $63 \%$.
+Roughtly speaking, the average reconstruction error correlates with the amount of variance not explained by the components used in projection.
+In more detail, the average reconstruction error should be roughly the variance of the
 first principal component divided by the proportion of variance of the
-first principal component explained times  the proportion of variance
+first principal component explained times the proportion of variance
 explained subtracted from $100 \%$.
 \begin{figure} \centering
 	\includegraphics[scale=0.7]{vscatter}

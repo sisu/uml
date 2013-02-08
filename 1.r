@@ -26,7 +26,7 @@ mkhist <- function(d, comp) {
 
 	cc <- c$rotation[,comp]
 	projected <- c(rbind(t(cc)) %*% t(d))
-	hist(projected, breaks=20)
+	hist(projected, breaks=20, xlim=c(-6,6))
 }
 
 #matpcas <- matrix(c(1,1,-1,1)/sqrt(2),2,2)

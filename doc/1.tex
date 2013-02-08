@@ -344,7 +344,7 @@ We can then reproduce an approximation to the original matrix by multiplying aga
 The reconstruction error of a data vector is defined as the squared distance to the original data. The average error is the average of the errors of all the considered data vectors:
 $$Err_i = \frac{1}{n}\sum_{j=1}^{n}||Y_{*j}-Y^i_{*j}||^2$$ where $Y_{*j}$ denotes the $j$th column of $Y$. The principal components minimize the reconstruction error of this dimension reduction.
 
-The average reconstruction errors for different numbers of different numbers of principal components are displayed in Figure~\ref{fig:reduce}.
+The average reconstruction errors for different numbers of different numbers of principal components are displayed in Figure~\ref{fig:avgerr}.
 It can be seen that the error goes down quickly during about the first 20 components but the differences become smaller after that.
 
 Figure~\ref{fig:reduce} displays the result of doing dimension reduction and reconstruction for the 10 first digits using different numbers of principal components.
@@ -358,9 +358,11 @@ The data vectors should follow a similar distribution so that all of them can be
 
 \begin{figure}\centering
 	\includegraphics[scale=0.5]{error}
+	\caption{The average reconstruction error of dimension reduction as a function of the number of principal components.}\label{fig:avgerr}
+\end{figure}
+\begin{figure}\centering
 	\includegraphics[scale=\sscale]{digitreduce}
-	\caption{Left: the average reconstruction error of dimension reduction as a function of the number of principal components.
-	Right: The first 10 digits after reducing them to 1, 2, 4, 8, 16, 32, 64 and 128 dimensional subspaces spanned by the first principal components.
+	\caption{The first 10 digits after reducing them to 1, 2, 4, 8, 16, 32, 64 and 128 dimensional subspaces spanned by the first principal components.
 The rightmost column contains the original digits.
 The digits where preprocessed before the reduction and the preprocessing steps where inversed after the reduction.}\label{fig:reduce}
 \end{figure}

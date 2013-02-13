@@ -371,7 +371,7 @@ The digits where preprocessed before the reduction and the preprocessing steps w
 
 The dimension reduction with PCA can be used as a denoising method.
 As we saw, digit images can be represented by a small number of principal component directions, so we can ignore all the variance in other directions as noise.
-Since we use only a small number of principal components, the subspace spanned by their directions is only a small fraction of the whole space, so we ignore a large amounf of the noise.
+Since we use only a small number of principal components, the subspace spanned by their directions is only a small fraction of the whole space, so we ignore a large amount of the noise.
 Note that the principal components we use are the principal components of the non-noisy digit images, because we don't want the components to represent the noise but the actual signal parts of the data.
 
 Figure~\ref{fig:denoise} displays the result of denoising the noisy images by projecting them to some of the first principal components. It can be seen that many images are much more readable than the original ones when reduction is done with 16 components. With 8 components some digits become even clearer, but many also become too blurry to recognize. With 32 components most digits are quite hard to read, as much of the noise still remains.

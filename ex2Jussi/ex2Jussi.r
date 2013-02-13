@@ -70,9 +70,37 @@ kurtosisAlpha <- function(alpha, data){
 
 
 alpha <- seq(from = 0, to = pi, length.out = 1000)
-kurtY1 <- sapply(alpha, kurtosisAlpha, data = y1)
-alpha[kurtY1 == max(kurtY1)]
-plot(kurtY1~alpha, type = 'l', col = 'magenta')
+# Kurtosis of y1 as a function of alpha
+kurtY1 <- sapply(alpha, kurtosisAlpha, data = whitenedY1)
+# angle of maximal kurtosis
+maxAlphaY1 <- alpha[abs(kurtY1) == max(abs(kurtY1))]
 
-PCA <- prcomp(x2)
-whiteningX2 <- diag(1/(PCA$sdev))%*%(PCA$rotation)
+# Kurtosis of y2 as a function of alpha
+kurtY2 <- sapply(alpha, kurtosisAlpha, data = whitenedY2)
+# angle of maximal kurtosis
+maxAlphaY2 <- alpha[abs(kurtY2) == max(abs(kurtY2))]
+
+# Kurtosis of x1 as a function of alpha
+kurtX1 <- sapply(alpha, kurtosisAlpha, data = whitenedX1)
+# angle of maximal kurtosis
+maxAlphaX1 <- alpha[abs(kurtX1) == max(abs(kurtX1))]
+
+# Kurtosis of x2 as a function of alpha
+kurtX2 <- sapply(alpha, kurtosisAlpha, data = whitenedX2)
+# angle of maximal kurtosis
+maxAlphaX2 <- alpha[abs(kurtX2) == max(abs(kurtX2))]
+
+
+
+# plotting
+par(mfrow = c(2,2))
+par(pty = 's')
+par(mar=c(0,0,0,0)+2)
+plot(kurtY1~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of y1 as a function of alpha')
+abline(v=maxAlphaY1, col = 'red')
+plot(kurtY2~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of y2 as a function of alpha')
+abline(v=maxAlphaY2, col = 'red')
+plot(kurtX1~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of x1 as a function of alpha')
+abline(v=maxAlphaX1, col = 'red')
+plot(kurtX2~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of x2 as a function of alpha')
+abline(v=maxAlphaX2, col = 'red')

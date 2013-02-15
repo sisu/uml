@@ -30,9 +30,21 @@ x2 <- t(A2%*%t(x))
 
 
 # Exercise 2
+PCAnalysis <- function(x){
+	eig <- eigen(cov(x))	
+	PCs <- eig$vectors
+	weights <- eig$values
+	sorted <- sort(eig$values, decreasing = T)
+	for(iii in 1:length(sorted)){
+		PCs[iii,] <- eig$vectors[eig$values == sorted[iii],]
+	}
+	PCA <- list('PCs' = PCs, 'weights' = weights)
+	return(PCA)
+}
+
 whiten <- function(x){
-	PCA <- prcomp(x)
-	whitening <- diag(1/(PCA$sdev))%*%(PCA$rotation)
+	PCA <- PCAnalysis(x)
+	whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
 	y <- whitening%*%t(x)
 	return(y)
 }
@@ -68,6 +80,9 @@ kurtosisAlpha <- function(alpha, data){
 	kurt
 }
 
+maxAlpha <- function(x){
+	# Tulossa
+}
 
 alpha <- seq(from = 0, to = pi, length.out = 1000)
 # Kurtosis of y1 as a function of alpha
@@ -93,14 +108,52 @@ maxAlphaX2 <- alpha[abs(kurtX2) == max(abs(kurtX2))]
 
 
 # plotting
-par(mfrow = c(2,2))
-par(pty = 's')
-par(mar=c(0,0,0,0)+2)
-plot(kurtY1~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of y1 as a function of alpha')
-abline(v=maxAlphaY1, col = 'red')
-plot(kurtY2~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of y2 as a function of alpha')
-abline(v=maxAlphaY2, col = 'red')
-plot(kurtX1~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of x1 as a function of alpha')
-abline(v=maxAlphaX1, col = 'red')
-plot(kurtX2~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of x2 as a function of alpha')
-abline(v=maxAlphaX2, col = 'red')
+# par(mfrow = c(2,2))
+# par(pty = 's')
+# par(mar=c(0,0,0,0)+2)
+# plot(kurtY1~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of y1 as a function of alpha')
+# abline(v=maxAlphaY1, col = 'red')
+# plot(kurtY2~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of y2 as a function of alpha')
+# abline(v=maxAlphaY2, col = 'red')
+# plot(kurtX1~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of x1 as a function of alpha')
+# abline(v=maxAlphaX1, col = 'red')
+# plot(kurtX2~alpha, type = 'l', xlim = c(0,pi), col = 'magenta', main = 'Kurtosis of x2 as a function of alpha')
+# abline(v=maxAlphaX2, col = 'red')
+
+
+
+
+
+
+# Exercise 4
+estA <- function(x){
+	# tulee jatkossa
+	
+}
+# Estimate A for x1
+# b1 <- c(cos(maxAlphaX1), sin(maxAlphaX1))
+# R <- matrix(c(0,1,-1,0), c(2,2))
+# b2 <- t(R%*%b1)
+# invWA <- rbind(b1,b2)
+# PCA <- PCAnalysis(x1)
+# whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
+# A <- ginv(whitening)%*%ginv(invWA)
+
+# Estimate A for x2
+# b1 <- c(cos(maxAlphaX2), sin(maxAlphaX2))
+# R <- matrix(c(0,1,-1,0), c(2,2))
+# b2 <- t(R%*%b1)
+# invWA <- rbind(b1,b2)
+# PCA <- PCAnalysis(x2)
+# whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
+# A <- ginv(whitening)%*%ginv(invWA)
+
+# Estimate A for y2
+# b1 <- c(cos(maxAlphaY2), sin(maxAlphaY2))
+# R <- matrix(c(0,1,-1,0), c(2,2))
+# b2 <- t(R%*%b1)
+# invWA <- rbind(b1,b2)
+# PCA <- PCAnalysis(y2)
+# whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
+# A <- ginv(whitening)%*%ginv(invWA)
+

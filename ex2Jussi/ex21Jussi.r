@@ -80,10 +80,6 @@ kurtosisAlpha <- function(alpha, data){
 	kurt
 }
 
-maxAlpha <- function(x){
-	# Tulossa
-}
-
 alpha <- seq(from = 0, to = pi, length.out = 1000)
 # Kurtosis of y1 as a function of alpha
 kurtY1 <- sapply(alpha, kurtosisAlpha, data = whitenedY1)
@@ -126,34 +122,32 @@ maxAlphaX2 <- alpha[abs(kurtX2) == max(abs(kurtX2))]
 
 
 # Exercise 4
-estA <- function(x){
-	# tulee jatkossa
-	
+maxAlpha <- function(x, n){
+	alpha <- seq(from = 0, to = pi, length.out = n)
+	kurt <- sapply(alpha, kurtosisAlpha, data = x)
+	maxAlpha <- alpha[abs(kurt) == max(abs(kurt))]
+
 }
-# Estimate A for x1
-# b1 <- c(cos(maxAlphaX1), sin(maxAlphaX1))
-# R <- matrix(c(0,1,-1,0), c(2,2))
-# b2 <- t(R%*%b1)
-# invWA <- rbind(b1,b2)
-# PCA <- PCAnalysis(x1)
-# whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
-# A <- ginv(whitening)%*%ginv(invWA)
 
-# Estimate A for x2
-# b1 <- c(cos(maxAlphaX2), sin(maxAlphaX2))
-# R <- matrix(c(0,1,-1,0), c(2,2))
-# b2 <- t(R%*%b1)
-# invWA <- rbind(b1,b2)
-# PCA <- PCAnalysis(x2)
-# whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
-# A <- ginv(whitening)%*%ginv(invWA)
+estA <- function(x, n){
+	whitenedX <- t(whiten(x))
+	b1 <- c(cos(maxAlpha(whitenedX, n)), sin(maxAlpha(whitenedX, n)))
+	R <- matrix(c(0,1,-1,0), c(2,2))
+	b2 <- t(R%*%b1)
+	invWA <- rbind(b1,b2)
+	PCA <- PCAnalysis(x)
+	whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
+	A <- ginv(whitening)%*%ginv(invWA)
+	return(A)	
+}
 
-# Estimate A for y2
-# b1 <- c(cos(maxAlphaY2), sin(maxAlphaY2))
-# R <- matrix(c(0,1,-1,0), c(2,2))
-# b2 <- t(R%*%b1)
-# invWA <- rbind(b1,b2)
-# PCA <- PCAnalysis(y2)
-# whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
-# A <- ginv(whitening)%*%ginv(invWA)
+# Compare the estimated A and the original:
+# estA(x1,1000)
+# A1
+# estA(x2,1000)
+# A2
+# estA(y1,1000)
+# A1
+# estA(y2,1000)
+# A2
 

@@ -44,3 +44,23 @@ plotkurt <- function() {
 	ys <- sapply(xs, function(m) kurt(ys[,m]))
 	plot(xs,ys, t='l')
 }
+
+
+mroot <- function(a) {
+	eig <- eigen(a)
+	eig$vectors %*% diag(sqrt(eig$values)) %*% t(eig$vectors)
+}
+orthogonalize <- function(U) solve(mroot(U%*%t(U))) %*% U
+
+
+kurtICAStep <- function(W, Z) (t(Z) %*% (Z %*% W)**3)/dim(Z)[1] - 3*W
+
+kurtICA <- function(Z, m) {
+	n <- dim(Z)[2]
+	W <- matrix(rnorm(n*m),n,m)
+	for (i in 1:100) {
+		W <- kurtICAStep(W, Z)
+		W <- orthogonalize(W)
+	}
+	W
+}

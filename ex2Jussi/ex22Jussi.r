@@ -1,17 +1,17 @@
 # Exercise 1
 
-s <- matrix(nrow=10000,ncol=32)
+s <- matrix(nrow=20000,ncol=32)
 for(iii in 1:32){
 	s[,iii] <- rlaplace(100, location = 0, scale = (1/sqrt(2)))
 }
 
-yHat = matrix(nrow=10000,ncol=32)
+yHat = matrix(nrow=20000,ncol=32)
 yHat[,1] <- s[,1]
 for(iii in 2:32){
 	yHat[,iii] <- rowSums(s[,1:iii])	
 }
 
-y <- matrix(nrow=10000,ncol=32)
+y <- matrix(nrow=20000,ncol=32)
 for(iii in 1:32){
 	y[,iii] <- yHat[,iii]/sqrt(var(yHat[,iii]))
 }
@@ -93,5 +93,16 @@ ICASymmetric <- function(x, n){
 	return(W)
 }
 
-# Exercise 4
+# Exercise 5
+Sigma <- lower.tri(diag(32), diag = T)*1
+D <- diag(1/sqrt(apply(yHat,2, var)))
+A <- D%*%Sigma
 
+wY <- t(whiten(y))
+PCA <- prcomp(y)
+whitening <- diag(1/(PCA$sdev))%*%t(PCA$rotation)
+Ahat <- ICASymmetric(wY, 32)
+Ahat <- solve(whitening)%*% Ahat
+
+# Average squared error:
+# mean(1/32^2 * (Ahat-A)^2)

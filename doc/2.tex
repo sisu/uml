@@ -18,7 +18,7 @@ Master student}
 \date{}
 \maketitle
 
-\section{Exercise set 2}
+\section{Exercise set 1}
 \subsection{Exercise 1}
 Sample covariance and mean:
 \begin{verbatim}
@@ -121,24 +121,83 @@ Kurtosis maximized for these alpha:
 \end{figure}
 \subsection{Exercise 4}
 \begin{verbatim}
+> estA(x1,1000)
+          [,1]     [,2]
+[1,] 0.4213442 1.672819
+[2,] 2.1730399 1.504597
 > A1
        [,1]    [,2]
 [1,] 0.4483 -1.6730
 [2,] 2.1907 -1.4836
-> estimatedA1forUniform
-          [,1]      [,2]
-[1,] 0.4586854 -1.668015
-[2,] 2.1968702 -1.488719
+> estA(x2,1000)
+            [,1]     [,2]
+[1,] -0.02973494 1.726432
+[2,]  1.70379490 2.014105
 > A2
        [,1]    [,2]
 [1,] 0.0000 -1.7321
 [2,] 1.7321 -2.0000
-> estimatedA2forUniform
-           [,1]      [,2]
-[1,] 0.01227525 -1.724465
-[2,] 1.74334166 -1.999660
-
+> estA(y1,1000)
+          [,1]       [,2]
+[1,] -1.373120  1.0530153
+[2,] -2.634125 -0.1839215
+> A1
+       [,1]    [,2]
+[1,] 0.4483 -1.6730
+[2,] 2.1907 -1.4836
+> estA(y2,1000)
+          [,1]     [,2]
+[1,] -1.054454 1.379936
+[2,] -2.586195 0.514233
+> A2
+       [,1]    [,2]
+[1,] 0.0000 -1.7321
+[2,] 1.7321 -2.0000
 \end{verbatim}
 \subsection{Exercise 5}
+
+\section{Exercise set 2}
+
+\subsection{Exercise 1}
+\subsection{Exercise 2}
+\subsection{Exercise 3}
+\begin{verbatim}
+> ICASymmetric(whitenedX1, 2)
+          [,1]       [,2]
+[1,] 0.6973196 -0.7167604
+[2,] 0.7167604  0.6973196
+\end{verbatim}
+\subsection{Exercise 4}
+The matrix transforming $\textbf{s} \to \tilde{\textbf{y}}$, $y_m = \sum_{i=1}^m s_i$, is given by
+the lower triangular matrix of which every nonzero element is equal to
+one. An example in three dimensions:
+\[
+\Sigma =
+\left[ \begin{array}{ccc}
+1 & 0 & 0 \\
+1 & 1 & 0 \\
+1 & 1 & 1 \end{array} \right],
+\quad
+\tilde{\textbf{y}} = \Sigma \textbf{s} = (s_1, s_1 + s_2, s_1 + s_2 + s_3)^T.
+\]
+To normalize $y_m$, the variance is required. After estimating
+the variance, the transformation $\tilde{\textbf{y}} \to \textbf{y}$
+is achieved via multiplication by the diagonal matrix $D$ containing the
+standard deviations: 
+\[
+\textbf{y} = D \tilde{\textbf{y}}= \textup{diag} \left( \frac{1}{\sqrt{\textup{var}(y_i)}}
+\right) \tilde{\textbf{y}}.
+\]
+
+Now, after transforming $\textbf{s} \to \tilde{\textbf{y}}$ and
+estimating the variance, one gets matrices $D$ and $\Sigma$. Their
+product $A = D \Sigma$ gives the transformation matrix $\textbf{s} \to
+\textbf{y}$:
+\[
+\textbf{y} = A\textbf{s}.
+\]
+\subsection{Exercise 5}
+
+
 
 \end{document}

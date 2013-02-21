@@ -32,19 +32,19 @@ x2 <- t(A2%*%t(x))
 # Exercise 2
 PCAnalysis <- function(x){
 	eig <- eigen(cov(x))	
-	PCs <- eig$vectors
-	weights <- eig$values
+	rotation <- eig$vectors
+	sdev <- sqrt(eig$values)
 	sorted <- sort(eig$values, decreasing = T)
 	for(iii in 1:length(sorted)){
-		PCs[iii,] <- eig$vectors[eig$values == sorted[iii],]
+		rotation[iii,] <- eig$vectors[eig$values == sorted[iii],]
 	}
-	PCA <- list('PCs' = PCs, 'weights' = weights)
+	PCA <- list('rotation' = rotation, 'sdev' = sdev)
 	return(PCA)
 }
 
 whiten <- function(x){
-	PCA <- PCAnalysis(x)
-	whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
+	PCA <- prcomp(x)
+	whitening <- diag(1/(PCA$sdev))%*%t(PCA$rotation)
 	y <- whitening%*%t(x)
 	return(y)
 }
@@ -75,8 +75,7 @@ kurtosis <- function(x){
 # kurtosis as function of alpha
 kurtosisAlpha <- function(alpha, data){
 	w <- c(cos(alpha), sin(alpha))
-	data <- w%*%t(data)
-	kurt <- kurtosis(data)
+	kurt <- kurtosis(w%*%t(data))
 	kurt
 }
 
@@ -135,8 +134,8 @@ estA <- function(x, n){
 	R <- matrix(c(0,1,-1,0), c(2,2))
 	b2 <- t(R%*%b1)
 	invWA <- rbind(b1,b2)
-	PCA <- PCAnalysis(x)
-	whitening <- diag(1/(sqrt(PCA$weights)))%*%t(PCA$PCs)
+	PCA <- prcomp(x)
+	whitening <- diag(1/PCA$sdev)%*%t(PCA$rotation)
 	A <- ginv(whitening)%*%ginv(invWA)
 	return(A)	
 }

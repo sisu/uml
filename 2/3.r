@@ -47,3 +47,20 @@ ica <- function(X) {
 	}
 	B %*% W
 }
+
+#B <- ica(X)
+
+mkfigs <- function() {
+	w <- 900
+	h <- 600
+	png('mixed.png', width=w, height=h)
+	visual(X, 3)
+	dev.off()
+	png('white.png', width=w, height=h)
+	visual(whiteT(X) %*% X, 3)
+	dev.off()
+	signs <- c(-1,-1,-1,1,-1,-1)
+	png('icares.png', width=w, height=h)
+	visual(B %*% X*signs, 3)
+	dev.off()
+}

@@ -209,4 +209,41 @@ product $A = D \Sigma$ gives the transformation matrix $\textbf{s} \to
 \end{verbatim}
 
 
+\section{Exercise set 3}
+
+\subsection{Exercise 1}
+
+In the third exercise we were given six images which were weighted sums of six hidden source images, and the goal was to recover the original images from the mixtures.
+The visualization of the mixed images is shown in Figure~\ref{fig:mixed}.
+
+For a single image, we can assume that each pixel is a sample of a random variable with distribution defined by the color distribution of the image.
+In order to apply the ICA model we have to assume that the random variables are independent of each other.
+Since the source images are unrelated to each other the pixels of different source images at the same position are not directly correlated.
+However, since the pixel values are not truly random, there are usually some hidden depencies between real world images.
+For instance, suppose that $s_1$ and $s_2$ are two source images and $p$ and $q$ are pixel positions.
+If $(s_1)_p\approx(s_1)_q$, then $p$ and $q$ are more likely to be close to each other in the images than if the values are very different, and thus $(s_2)_p$ and $(s_2)_q$ are also likely to be quite close to each other.
+In practice this correlation appears to be small enough that we can still separate a small number of images quite well.
+
+\newcommand\iscale{0.45}
+\begin{figure}\centering
+	\includegraphics[scale=\iscale]{mixed}
+	\caption{Mixed images used as a source of ICA.}\label{fig:mixed}
+\end{figure}
+
+\subsection{Exercise 2}
+
+\begin{figure}\centering
+	\includegraphics[scale=\iscale]{white}
+	\caption{Result of doing a whitening transform for the images of Figure~\ref{fig:mixed}.}\label{fig:white}
+\end{figure}
+
+\subsection{Exercise 3}
+\subsection{Exercise 4}
+
+\begin{figure}\centering
+	\includegraphics[scale=\iscale]{icares}
+	\caption{Result of doing ICA on the whitened mixture of images.}\label{fig:icares}
+\end{figure}
+
+
 \end{document}

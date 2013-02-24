@@ -55,6 +55,7 @@ orthogonalize <- function(U) solve(mroot(U%*%t(U))) %*% U
 
 kurtICAStep <- function(W, Z) (t(Z) %*% (Z %*% W)**3)/dim(Z)[1] - 3*W
 
+# assumes that Z is white
 kurtICA <- function(Z, m) {
 	n <- dim(Z)[2]
 	W <- matrix(rnorm(n*m),n,m)

@@ -19,8 +19,49 @@ Master student}
 \maketitle
 
 \section{Exercise set 1}
+In the first set of exercise we compared results of applying ICA to
+uniformly distributed and gaussian data.
 \subsection{Exercise 1}
-Sample covariance and mean:
+First we needed some data. We were given two mixing matrices 
+\[
+A_1 = \left[ \begin{array}{ccc}
+0.4483 & -1.6730  \\
+2.1907 & -1.4836  \end{array} \right], \quad
+A_2 = \left[ \begin{array}{ccc}
+0 & -1.7321  \\
+1.7321 & -2.0  \end{array} \right].
+\]
+These matrices were then used to mix a sample \textbf{s} of uniformly distributed
+data and a sample \textbf{n} of gaussian data, each containing 5000
+points. The results of mixing are denoted 
+\[
+\begin{array}{ccc}
+\textbf{x}_1 = A_1\textbf{s}, \\
+\textbf{x}_2 = A_2\textbf{s}, \\
+\textbf{y}_1 = A_1\textbf{n}, & \textup{and} \\
+\textbf{y}_2 = A_2\textbf{n}.
+\end{array}
+\]
+
+Scatter plots of the original and mixed data can be seen in figure
+\ref{fig:scatterE21}. In our previous report we described how standard
+normally distributed data with zero mean and covariance $\Sigma$ has a
+multinormal distribution with zero mean and covariance $AA^T$, after
+it is linearly transformed with a matrix $A$. Thus 
+\[
+E \textbf{y}_1 = 0 = E \textbf{y}_2,
+\]
+and 
+\[
+\textup{cov}(\textbf{y}_1) = A_1A_1^T = \left[ \begin{array}{ccc}
+3.000 & 3.4642  \\
+3.4642 & 7.000  \end{array} \right], \quad
+\textup{cov}(\textbf{y}_1) = A_1A_1^T = \left[ \begin{array}{ccc}
+3.000 & 3.4642  \\
+3.4642 & 7.000  \end{array} \right].
+\] 
+Notice that though the mixing matrices are different, the covariance
+of the mixed data is equal. Below the computed sample covariance and mean of the mixed data:
 \begin{verbatim}
 > mean(y1)
 [1] -0.007008821
@@ -35,16 +76,22 @@ Sample covariance and mean:
 [1,] 2.917094 3.328705
 [2,] 3.328705 6.733001
 \end{verbatim}
-Distributions are multinormal with zero mean and covariance $A_1A_1^T$
-and $A_2A_2^T$. 
+As can be seen, the sample covariance and mean are roughly equal to the covariance and mean of the
+underlying distribution, as is expected.
 
 \begin{figure}\centering
-	\includegraphics{scatterPlotE21.pdf}
-	\caption{Scatter plots of the data.} \label{fig:scatterE21}
+	\includegraphics[trim = 0cm 5.9cm 0cm 0cm, clip = true,
+totalheight=0.5\textheight]{scatterPlotE21.pdf}
+	\caption{Scatter plots of the data before and after
+          mixing. The first column shows the unmixed data, the second column
+          the data mixed with $A_1$ and the third the data mixed with $A_2$.} \label{fig:scatterE21}
 \end{figure}
 
 \subsection{Exercise 2}
-The whitening matrices were:
+Now that we had our generated artificial data, the first step of ICA
+is to whiten the data. The results of applying the PCA based whitening
+transformation can be seen plotted in figure \ref{fig:scatterWhiteE22}.
+The whitening matrices used were:
 \begin{verbatim}
 > whiteningY1
            PC1        PC2
@@ -63,48 +110,65 @@ The whitening matrices were:
 [1,] -0.1635482 -0.2860464
 [2,] -0.8673773  0.4959264
 \end{verbatim}
-PCA:
-\begin{verbatim}
-> prcomp(y1)
-Standard deviations:
-[1] 2.9426781 0.9942015
+We failed to see the connection between the whitening matrices and the
+mixing matrices.
+% PCA:
+% \begin{verbatim}
+% > prcomp(y1)
+% Standard deviations:
+% [1] 2.9426781 0.9942015
 
-Rotation:
-           PC1        PC2
-[1,] 0.4989681  0.8666204
-[2,] 0.8666204 -0.4989681
-> prcomp(y2)
-Standard deviations:
-[1] 2.9430913 0.9941372
+% Rotation:
+%            PC1        PC2
+% [1,] 0.4989681  0.8666204
+% [2,] 0.8666204 -0.4989681
+% > prcomp(y2)
+% Standard deviations:
+% [1] 2.9430913 0.9941372
 
-Rotation:
-           PC1        PC2
-[1,] 0.5013556  0.8652413
-[2,] 0.8652413 -0.5013556
-> prcomp(x1)
-Standard deviations:
-[1] 3.0412644 0.9986868
+% Rotation:
+%            PC1        PC2
+% [1,] 0.5013556  0.8652413
+% [2,] 0.8652413 -0.5013556
+% > prcomp(x1)
+% Standard deviations:
+% [1] 3.0412644 0.9986868
 
-Rotation:
-           PC1        PC2
-[1,] 0.4985415  0.8668658
-[2,] 0.8668658 -0.4985415
-> prcomp(x2)
-Standard deviations:
-[1] 3.034897 1.000858
+% Rotation:
+%            PC1        PC2
+% [1,] 0.4985415  0.8668658
+% [2,] 0.8668658 -0.4985415
+% > prcomp(x2)
+% Standard deviations:
+% [1] 3.034897 1.000858
 
-Rotation:
-            PC1        PC2
-[1,] -0.4963519 -0.8681214
-[2,] -0.8681214  0.4963519
-\end{verbatim}
+% Rotation:
+%             PC1        PC2
+% [1,] -0.4963519 -0.8681214
+% [2,] -0.8681214  0.4963519
+%\end{verbatim}
 \begin{figure}\centering
-	\includegraphics{scatterPlotOfWhitenedE22.pdf}
+	\includegraphics[totalheight=0.5\textheight]{scatterPlotOfWhitenedE22.pdf}
 	\caption{Scatter plots of the whitened data.} \label{fig:scatterWhiteE22}
 \end{figure}
 
 \subsection{Exercise 3}
-Kurtosis maximized for these alpha:
+ICA can be solved by maximizing kurtosis. In figure
+\ref{fig:kurtosisAlphaE23} the kurtosis of each mixed whitened
+data, projected onto a unit vector \textbf{w} which forms an angle
+$\alpha \in [0,\pi]$ with the $x$-axis, is plotted as a function of
+alpha. 
+
+The plots show larger absolute values of kurtosis for the uniform data, as for
+the gaussian data. Also, the kurtosis of the uniform distribution is a
+sine curve, which is fairly regular as should be expected for
+nongaussian ICs. Coincidentally, the gaussian distribution also show a
+sine-like curve for kurtosis. In repeated further tests the kurtosis
+of the gaussian data showed more irregularity. In fact the gaussian
+data should have kurtosis of zero, and different values of kurtosis
+are the result of chance.
+
+Kurtosis was maximized for the following $\alpha$:
 \begin{verbatim}
 > maxAlphaY1
 [1] 1.006316
@@ -116,10 +180,28 @@ Kurtosis maximized for these alpha:
 [1] 0.5220264
 \end{verbatim}
 \begin{figure}\centering
-	\includegraphics{kurtosisAlphaE23.pdf}
+	\includegraphics[totalheight=0.5\textheight]{kurtosisAlphaE23.pdf}
 	\caption{Kurtosis as a function of alpha.} \label{fig:kurtosisAlphaE23}
 \end{figure}
 \subsection{Exercise 4}
+The optimal projection vectors $\textbf{b}_i$ are the rows of the inverse of the
+whitened matrix $A_w$
+\[
+B = \left[ \begin{array}{ccc}
+b_1^T  \\
+b_2 ^T \end{array} \right] = A_w^{-1}.
+\]
+$A_w$ is the result of transforming the original $A$ with the
+whitening matrix denoted here by $W$:
+\[
+A_w = WA.
+\]
+Therefore $A$ can be estimated using the whitening matrix and the optimal
+vectors in the following manner:
+\[
+A = W^-1B^-1.
+\]
+Our estimates are shown below:
 \begin{verbatim}
 > estA(x1,1000)
           [,1]     [,2]
@@ -154,11 +236,27 @@ Kurtosis maximized for these alpha:
 [1,] 0.0000 -1.7321
 [2,] 1.7321 -2.0000
 \end{verbatim}
+Notice that the uniform data gives good estimates for the mixing
+matrices, whereas the gaussian data gives bad estimates.
 \subsection{Exercise 5}
+Exercise 5 was to explain the above result: why is it possible to find
+an estimate for $A_1$ and $A_2$ for the uniform data, but not for the
+gaussian data?
+
+The reason for this is that the whitened matrix $A_w$ is orthogonal,
+and therefore, if \textbf{s} is gaussian, $A_ws$ is also gaussian and
+white. Now there is no unique solution to the optimal projection
+$b_i^TA_ws$, because of orthogonality assumption for the estimated ICs
+$b_i$.
 
 \section{Exercise set 2}
-
+Next we were given the task of performing ICA on 32 independent
+variables following a Laplacian distribution.
 \subsection{Exercise 1}
+First we needed to artificially generate the data. This was done using
+standard R function rlaplace. Then we transformed the data by doing
+the following:
+
 \subsection{Exercise 2}
 \subsection{Exercise 3}
 \begin{verbatim}

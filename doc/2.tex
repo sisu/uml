@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage{amssymb, amsmath,hyperref,verbatim,listings,graphicx,subfigure,fullpage}
+\usepackage{amssymb,
+  amsmath,hyperref,verbatim,listings,graphicx,subfigure,fullpage, braket}
 
 \begin{document}
 
@@ -249,22 +250,82 @@ white. Now there is no unique solution to the optimal projection
 $b_i^TA_ws$, because of orthogonality assumption for the estimated ICs
 $b_i$.
 
+
+
+
 \section{Exercise set 2}
 Next we were given the task of performing ICA on 32 independent
-variables following a Laplacian distribution.
+variables following a Laplacian distribution with zero mean and unit variance.
+
 \subsection{Exercise 1}
-First we needed to artificially generate the data. This was done using
-standard R function rlaplace. Then we transformed the data by doing
-the following:
+First we needed to artificially generate the data. We achieved this by
+first drawing a sample $u$ of 10000 points from a uniform distribution on
+the interval $[-0.5 \; 0.5]$, and then transforming the data by $s =
+1/\sqrt(2) \cdot \textup{sign}(u) \cdot \log(1-2|u|)$. Such a variable
+\textbf{s} then follows a Laplacian distribution with zero mean and
+unit variance. Repeating this generation process 32 times creates a
+sample of 10000 points of a random vector which consists of 32 independent random
+variables following the desired Laplacian distribution.
+
+Next the generated data was transformed by summing the $m$ first $s_i$
+and then normalizing to unit variance. The result
+\[ \tilde{y}_m = \sum_{i = 1}^m s_i \quad \textrm{and} \quad y_m =
+\frac{\tilde{y}_m}{\sqrt{\textup{Var}(\tilde{y}_m)}}.
+\]
+
+Then we computed an estimate for the pdf's of the variables $y_m$, $m
+\in \set{1,2,4,8,16,32}$. We approached this in two ways, by using a
+histogram estimation, and by using the kernel density estimation
+method implemented in R. Only the results of the latter will be shown
+here, as the purpose was only to illustrate the similarity of the log
+density of the normalized sums to the similarity of the gaussian log
+density.
+
+The logarithm densities of the six variables can be seen in figure
+\ref{fig:logDensE221}.  Notice how the two densities become more
+similar, as $m$ grows. This is of course explained by the central
+limit theorem.
+
+\begin{figure}\centering
+	\includegraphics[totalheight=0.5\textheight]{logDensE221.pdf}
+	\caption{The logartihm densities for variables $y_m$, $m \in
+          \set{1,2,4,8,16,32}$ in magenta, and the gaussian logarithm density
+          in blue.} \label{fig:logDensE221}
+\end{figure}
 
 \subsection{Exercise 2}
+As was seen in the previous exercise, the variables $y_m$ tend to the
+gaussian distribution. If kurtosis is a good measure of gaussianity,
+this would also imply, that the kurtosis of $y_m$ should tend to
+zero. The kurtosis of $y_m$ as a function of $m$ can be seen plotted
+in figure \ref{fig:kurtosisM}.
+
+\begin{figure}\centering
+	\includegraphics[trim = 0cm 0.5cm 0cm 1cm, clip = true, totalheight=0.5\textheight]{kurtosisM.pdf}
+	\caption{The kurtosis of $y_m$ as a function of $m$.} \label{fig:kurtosisM}
+\end{figure}
+
 \subsection{Exercise 3}
+In this exercise we were given the task to implement the ICA algorithm
+based on symmetric orthogonalization. For the one unit algorithm we
+both used the fast fixed point algorithm. As a stop criterion one could use
+the difference between the kurtoses after each iteration.
+
+We tested our implementations on the uniform data set of Exercise set
+1 transformed with matrix $A1$. The result can be seen below
 \begin{verbatim}
-> ICASymmetric(whitenedX1, 2)
-          [,1]       [,2]
-[1,] 0.6973196 -0.7167604
-[2,] 0.7167604  0.6973196
+> A1
+       [,1]    [,2]
+[1,] 0.4483 -1.6730
+[2,] 2.1907 -1.4836
+> estA1
+          [,1]     [,2]
+[1,] 0.4367542 1.690438
+[2,] 2.1952565 1.542458
 \end{verbatim}
+Notice that the estimate is very close to the original, with ambiguity
+of sing in the second column.
+
 \subsection{Exercise 4}
 The matrix transforming $\textbf{s} \to \tilde{\textbf{y}}$, $y_m = \sum_{i=1}^m s_i$, is given by
 the lower triangular matrix of which every nonzero element is equal to
@@ -295,17 +356,22 @@ product $A = D \Sigma$ gives the transformation matrix $\textbf{s} \to
 \textbf{y} = A\textbf{s}.
 \]
 \subsection{Exercise 5}
+In this exercise we estimated the mixing matrix $A$ from the previous
+exercise by using the ICA algorithm we implemented in exercise 3. The
+average squared error of the estimate of $A$ with 10000 points and
+20000 points can be seen below. 
 10000 points:
 \begin{verbatim}
 > mean(1/32^2 * (Ahat-A)^2)
-[1] 6.090882e-05
+[1] 6.775627e-05
 \end{verbatim}
 20000 points:
 \begin{verbatim}
 > mean(1/32^2 * (Ahat-A)^2)
-[1] 5.634683e-05
+[1] 5.675457e-05
 \end{verbatim}
-
+These show no significant change, although the change is in the right
+direction of smaller error for more points. 
 
 \section{Exercise set 3}
 

@@ -1,17 +1,22 @@
 # Exercise 1
-
-s <- matrix(nrow=20000,ncol=32)
-for(iii in 1:32){
-	s[,iii] <- rlaplace(100, location = 0, scale = (1/sqrt(2)))
+rlap <- function(n) {
+	u <- runif(n,-.5,.5)
+	sign(u) * log(1-2*abs(u)) / sqrt(2)
 }
 
-yHat = matrix(nrow=20000,ncol=32)
+nPoints <- 10000
+s <- matrix(nrow=nPoints,ncol=32)
+for(iii in 1:32){
+	s[,iii] <- rlap(nPoints)
+}
+
+yHat = matrix(nrow=nPoints,ncol=32)
 yHat[,1] <- s[,1]
 for(iii in 2:32){
 	yHat[,iii] <- rowSums(s[,1:iii])	
 }
 
-y <- matrix(nrow=20000,ncol=32)
+y <- matrix(nrow=nPoints,ncol=32)
 for(iii in 1:32){
 	y[,iii] <- yHat[,iii]/sqrt(var(yHat[,iii]))
 }
@@ -36,13 +41,12 @@ for(iii in 1:32){
 
 # Exercise 2
 kurtosis <- function(x){
-	mean(x^4) - 3*mean(x^2)^2
+	mean(x^4) - 3
 }
 kurt <- apply(y,2,kurtosis)
 
 # plotting
-# plot(kurt, type = 'l', col = 'forestgreen')
-# abline(h = 0)
+# plot(kurt, type = 'l', col = 'forestgreen', xlab = 'm', ylab='Kurtosis')
 
 
 
@@ -86,7 +90,7 @@ ICAOnePointIteration <- function(x,w){
 
 ICASymmetric <- function(x, n){
 	W <- diag(1,n,dim(x)[2])
-	for(iii in 1:1000){
+	for(iii in 1:100){
 		W <- apply(W,1, ICAOnePointIteration, x = x)
 		W <- symOrtogProj(W)
 	}

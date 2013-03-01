@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb,
   amsmath,hyperref,verbatim,listings,graphicx,subfigure,fullpage, braket}
+\renewcommand\vec[1]{\ensuremath{\mathbf{#1}}}
 
 \begin{document}
 
@@ -22,7 +23,7 @@ Master student}
 \section{Exercise set 1}
 In the first set of exercise we compared results of applying ICA to
 uniformly distributed and gaussian data.
-\subsection{Exercise 1}
+\subsection{Exercise 1}\label{sec:11}
 First we needed some data. We were given two mixing matrices 
 \[
 A_1 = \left[ \begin{array}{ccc}
@@ -378,7 +379,7 @@ direction of smaller error for more points.
 \subsection{Exercise 1}
 
 In the third exercise we were given six images which were weighted sums of six hidden source images, and the goal was to recover the original images from the mixtures.
-The visualization of the mixed images is shown in Figure~\ref{fig:mixed}.
+The visualization of the mixed images is shown in Figure~\ref{fig:mixed}. The images were given as a data matrix $X\in\mathbb{R}^{6\times 90000}$ where each row represents a $300\times 300$ image.
 
 For a single image, we can assume that each pixel is a sample of a random variable with distribution defined by the color distribution of the image.
 In order to apply the ICA model we have to assume that the random variables are independent of each other.
@@ -395,6 +396,9 @@ In practice this correlation appears to be small enough that we can still separa
 \end{figure}
 
 \subsection{Exercise 2}
+Each of the image data vectors was already centered around 0, so the data could be whitened with a simple linear transform obtained from the primary components of the data.
+The result of performing the whitening transform is shown in Figure~\ref{fig:white}.
+The image features are still quite hard to recognize.
 
 \begin{figure}\centering
 	\includegraphics[scale=\iscale]{white}
@@ -402,12 +406,51 @@ In practice this correlation appears to be small enough that we can still separa
 \end{figure}
 
 \subsection{Exercise 3}
+We implemented the maximum likelihood based gradient descend ICA algorithm described in the exercise.
+The algorithm maintains variables $\gamma_i$ which estimate the types of variables such that $\gamma_i$ is positive if the $i$th variable is supergaussian and negative if the variable is subgaussian.
+The algorithm constructs a matrix $B\in\mathbb{R}^{n\times n}$ from the whitened random vector $\vec z\in\mathbb{R}^n$ such that $\vec y=B\vec z$ consists of the estimated latent variables.
+The convergence of objective $F=-\sum_i\gamma_iE(\log\cosh(y_i))$ is used to measure when the algorithm has converged.
+
+The algorithm was tested on the point set \vec{x_1} defined in Section~\ref{sec:11}.
+The Figure~\ref{fig:icatest} shows that the original uniformly distributed random variables were succesfully recovered.
+The figure also shows the progress of the objective function during the gradient descend.
+
+\begin{figure}\centering
+	\includegraphics[scale=0.6]{icatest}
+	\includegraphics[scale=0.6]{icaobj}
+	\caption{Top: the point set \vec{x_1} and the independent components extracted from it.
+	Bottom: The convergence of the objective value $F$ while performing ICA on \vec{x_1}.}\label{fig:icatest}
+\end{figure}
+
+At the end of the optimization, the final values of $\gamma_i$ are:
+\begin{verbatim}
+> ica(x1)$gamma
+[1] -0.1322905 -0.1221980
+\end{verbatim}
+The values are negative for both variables, as we could expect because uniform distribution is subgaussian.
+
 \subsection{Exercise 4}
+
+The algorithm was applied to the mixture of images $X$.
+The result (with some signs flipped manually) is shown in Figure~\ref{fig:icares}.
+The images are very clearly separated in the result.
+The colors of some of the images had to be reversed manually, because in the ICA model $\vec x=A\vec s$ it is impossible to measure the signs of $s_i$ from \vec{x} because the signs could get changed in the unknown mixing matrix $A$.
+For the same reason we cannot know exactly how dark or light the original images were, so contrast might be wrong in some of the results.
 
 \begin{figure}\centering
 	\includegraphics[scale=\iscale]{icares}
-	\caption{Result of doing ICA on the whitened mixture of images.}\label{fig:icares}
+	\caption{Result of performing ICA on the whitened mixtures of images.
+	As the signs of the latent variables cannot be estimated from the mixtures, some of the images were multiplied manually by -1.}\label{fig:icares}
 \end{figure}
+
+At the end of the optimization, for the variables $\gamma_i$ we obtain:
+\begin{verbatim}
+> ica_result$gamma
+[1] -0.08571442 -0.10709199 0.04650270  -0.11421166  0.14818749  0.19895902
+\end{verbatim}
+The values give a measure on the distribution of the shades of gray in the images.
+Supergaussian random variables have a peaked distribution whereas subgaussian ones have more uniform and flat distribution.
+Thus the leftmost images and the top-middle image of Figure~\ref{fig:icares} contain all shades fairly uniformly, whereas for the others the distribution is more uneven.
 
 
 \end{document}

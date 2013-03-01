@@ -11,7 +11,7 @@ x2 <- A2 %*% s
 y1 <- A1 %*% n
 y2 <- A2 %*% n
 
-whiteT <- function(x) {
+whiteTT <- function(x) {
 	p <- prcomp(x)
 	t(t(p$rotation) / p$sdev)
 }
@@ -28,13 +28,13 @@ wplot <- function() {
 	for (i in list(x1,x2,y1,y2)) {
 		x <- t(i)
 		plot(x)
-		plot(x %*% whiteT(x))
+		plot(x %*% whiteTT(x))
 	}
 }
 
 kurtAngle <- function(x, a) {
 	v <- c(cos(a),sin(a))
-	y <- x %*% whiteT(x) %*% v
+	y <- x %*% whiteTT(x) %*% v
 	sum(y**4)/length(y) - 3
 }
 

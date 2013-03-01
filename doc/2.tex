@@ -396,9 +396,11 @@ In practice this correlation appears to be small enough that we can still separa
 \end{figure}
 
 \subsection{Exercise 2}
+Whitening transforms the random variables into uncorrelated ones.
+This is partially what we want to do in ICA, as independent variables are also uncorrelated.
 Each of the image data vectors was already centered around 0, so the data could be whitened with a simple linear transform obtained from the primary components of the data.
 The result of performing the whitening transform is shown in Figure~\ref{fig:white}.
-The image features are still quite hard to recognize.
+The images are still quite hard to recognize, but the whitening makes some features appear in some images more clearly than in others.
 
 \begin{figure}\centering
 	\includegraphics[scale=\iscale]{white}

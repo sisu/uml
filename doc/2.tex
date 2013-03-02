@@ -313,7 +313,11 @@ both used the fast fixed point algorithm. As a stop criterion one could use
 the difference between the kurtoses after each iteration.
 
 We tested our implementations on the uniform data set of Exercise set
-1 transformed with matrix $A1$. The result can be seen below
+1 transformed with matrix $A1$.
+If $W$ is a matrix of a whitening transform for \vec{x} and $B$ is the result
+the ICA algorithm produces for $B\vec x$, we can estimate the latent variables to be $\vec{\tilde{s}}=BW\vec x$.
+The hidden mixing matrix can then be estimated to be $\hat{A}=(BW)^{-1}$.
+The result can be seen below
 \begin{verbatim}
 > A1
        [,1]    [,2]
@@ -324,8 +328,8 @@ We tested our implementations on the uniform data set of Exercise set
 [1,] 0.4367542 1.690438
 [2,] 2.1952565 1.542458
 \end{verbatim}
-Notice that the estimate is very close to the original, with ambiguity
-of sing in the second column.
+The estimate is very close to the original, with ambiguity
+of sign in the second column.
 
 \subsection{Exercise 4}
 The matrix transforming $\textbf{s} \to \tilde{\textbf{y}}$, $y_m = \sum_{i=1}^m s_i$, is given by
@@ -358,21 +362,27 @@ product $A = D \Sigma$ gives the transformation matrix $\textbf{s} \to
 \]
 \subsection{Exercise 5}
 In this exercise we estimated the mixing matrix $A$ from the previous
-exercise by using the ICA algorithm we implemented in exercise 3. The
-average squared error of the estimate of $A$ with 10000 points and
-20000 points can be seen below. 
+exercise by using the ICA algorithm we implemented in exercise 3.
+In the ICA model we can not esimate the order of the latent variables nor their scales.
+Thus it doesn't make sense to directly compare $\hat{A}$ and $A$, as we can permutation the columns of $\hat{A}$ and multiply some of them by -1 to get a new equivalent solution.
+In order to estimate the error between $\hat{A}$ and $A$ we should thus choose the optimal permutation and the signs of the columns that minimize the distance.
+Finding the recovery error thus requires finding a minimum-cost matching between the columns of $\hat{A}$ and $A$.
+We used an approximate solution to the matching problem by greedily choosing pairs of columns of $\hat{A}$ and $A$ that minimize the recovery error and removing them from the matrices until all the columns were paired.
+
+The resulting average squared error of the estimate of $A$ with 10000 points and
+20000 points can be seen below.
+
 10000 points:
 \begin{verbatim}
-> mean(1/32^2 * (Ahat-A)^2)
-[1] 6.775627e-05
+> recoveryError(Ahat,A)
+[1] 0.01914298
 \end{verbatim}
 20000 points:
 \begin{verbatim}
-> mean(1/32^2 * (Ahat-A)^2)
-[1] 5.675457e-05
+> recoveryError(Ahat,A)
+[1] 0.0134422
 \end{verbatim}
-These show no significant change, although the change is in the right
-direction of smaller error for more points. 
+It can be seen that the average recovery error becomes smaller as the number of points increases.
 
 \section{Exercise set 3}
 

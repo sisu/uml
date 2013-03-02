@@ -101,12 +101,12 @@ ICASymmetric <- function(x, n){
 Sigma <- lower.tri(diag(32), diag = T)*1
 D <- diag(1/sqrt(apply(yHat,2, var)))
 A <- D%*%Sigma
-
+#
 wY <- t(whiten(y))
 PCA <- prcomp(y)
 whitening <- diag(1/(PCA$sdev))%*%t(PCA$rotation)
-Ahat <- ICASymmetric(wY, 32)
-Ahat <- solve(whitening)%*% Ahat
+#Ahat <- ICASymmetric(wY, 32)
+#Ahat <- solve(whitening)%*% Ahat
 
 # Average squared error:
 # mean(1/32^2 * (Ahat-A)^2)

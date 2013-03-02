@@ -11,9 +11,10 @@ x2 <- A2 %*% s
 y1 <- A1 %*% n
 y2 <- A2 %*% n
 
-whiteTT <- function(x) {
+whiteT <- function(x) {
+	x <- t(x)
 	p <- prcomp(x)
-	t(t(p$rotation) / p$sdev)
+	t(p$rotation) / p$sdev
 }
 
 splot <- function() {
@@ -26,9 +27,9 @@ splot <- function() {
 wplot <- function() {
 	par(mfrow = c(4,2))
 	for (i in list(x1,x2,y1,y2)) {
-		x <- t(i)
-		plot(x)
-		plot(x %*% whiteTT(x))
+		x <- i
+		plot(t(x))
+		plot(t(whiteT(x) %*% x))
 	}
 }
 

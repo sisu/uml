@@ -38,6 +38,7 @@ emCluster <- function(X, m) {
 
 	objs <- NULL
 	prevobj <- -1e100
+	qn <- NULL
 	for(i in 1:10) {
 		# maximization
 #		invCs <- lapply(1:m, function(c) solve(C[[c]]))
@@ -58,7 +59,8 @@ emCluster <- function(X, m) {
 		# expectation
 		calcObj <- function(c,t,invC,constt) (-.5*t(X[t,]-mu[,c])%*%invC%*%(X[t,]-mu[,c]) + constt) * qn[t,c]
 		obj <- sum(sapply(1:m, function(c) sapply(1:t, calcObj, c=c, invC=solve(C[[c]]), constt=log(p[c])-.5*log(abs(det(C[[c]])))-log(2*pi)**(n/2))))
-		if (obj < prevobj+1e-5) break
+#		if (obj < prevobj+1e-5) break
+		if (abs(obj - prevobj) < 1e-5) break
 #		print(obj)
 		objs <- c(objs,obj)
 	}
@@ -67,5 +69,13 @@ emCluster <- function(X, m) {
 	res$mean <- mu
 	res$prob <- p
 	res$obj <- objs
+	res$map <- apply(qn,1,which.max) - 1
 	res
+}
+
+plotChoises <- function(ch) {
+	x1 <- dat[ch==0,]
+	x2 <- dat[ch==1,]
+	plot(x1, pch=16, cex=1, col='blue', xlim=c(-6,6), ylim=c(0,4))
+	points(x2, pch=16, cex=1, col='red')
 }

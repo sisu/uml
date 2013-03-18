@@ -140,7 +140,7 @@ EM <- function(data, nclust, C, mu, pie){
 		
 		# C:
 		for(j in 1:nclust){
-			C[[j]] <- 1/sum(qts[[j]]) * matrix(colSums(qts[[j]] * t(apply((data-mu[[j]]), 1, multWT))), c(2,2))
+			C[[j]] <- 1/sum(qts[[j]]) * matrix(colSums(qts[[j]] * t(apply(t(apply(data,1,'-', mu[[j]])), 1, multWT))), c(2,2))
 		}
 		
 		# pie:
@@ -177,7 +177,7 @@ points(data[cindex == 2,], cex = 0.3, pch = 16, col = 'darkblue')
 # Exercise 4
 
 # draw 100 samples from gaussian mixture with 4 clusters:
-n <- 100
+n <- 2000
 
 mean1 <- c(1,2)
 var1 <- c(1,1)
@@ -213,6 +213,11 @@ points(data4, pch = 16)
 # Do EM with 4 clusters and plot clusters with 5 different initial points:
 
 nclust = 4
+C <- list(diag(rep(1,length(data))))
+C <- rep(C,nclust)
+mu <- createRListMean(nclust, length(data))
+pie <- rep(1/nclust, nclust)
+em <- EM(data,nclust,C,mu,pie)
 em <- vector('list', 5)
 cindex <- vector('list', 5)
 for(k in 1:5){

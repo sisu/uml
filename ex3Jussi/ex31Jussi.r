@@ -177,7 +177,8 @@ points(data[cindex == 2,], cex = 0.3, pch = 16, col = 'darkblue')
 # Exercise 4
 
 # draw 100 samples from gaussian mixture with 4 clusters:
-n <- 2000
+n <- 100
+nclust = 4
 
 mean1 <- c(1,2)
 var1 <- c(1,1)
@@ -212,12 +213,6 @@ points(data4, pch = 16)
 
 # Do EM with 4 clusters and plot clusters with 5 different initial points:
 
-nclust = 4
-C <- list(diag(rep(1,length(data))))
-C <- rep(C,nclust)
-mu <- createRListMean(nclust, length(data))
-pie <- rep(1/nclust, nclust)
-em <- EM(data,nclust,C,mu,pie)
 em <- vector('list', 5)
 cindex <- vector('list', 5)
 for(k in 1:5){
@@ -227,9 +222,11 @@ for(k in 1:5){
 	em[[k]] <- EM(data, nclust, C, mu, pie)
 	cindex[[k]] <- apply(Reduce(cbind, em[[k]]$qts), 1 , which.max)
 }
+cindex <- apply(Reduce(cbind, em$qts), 1 , which.max)
 
-plot(data[cindex[[2]] == 1,], cex = 0.3, pch = 16, col = 'forestgreen', xlim = xlim, ylim = ylim, xlab = 'x', ylab = 'y')
-points(data[cindex[[2]] == 2,], cex = 0.3, pch = 16, col = 'darkblue')
-points(data[cindex[[2]] == 3,], cex = 0.3, pch = 16, col = 'purple')
-points(data[cindex[[2]] == 4,], cex = 0.3, pch = 16)
+
+plot(data[cindex == 1,], pch = 16, col = 'forestgreen', xlim = xlim, ylim = ylim, xlab = 'x', ylab = 'y')
+points(data[cindex == 2,],  pch = 16, col = 'darkblue')
+points(data[cindex == 3,],  pch = 16, col = 'purple')
+points(data[cindex == 4,],  pch = 16)
 

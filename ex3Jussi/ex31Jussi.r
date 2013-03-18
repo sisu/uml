@@ -1,4 +1,5 @@
-t## setwd('/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/git/uml/ex3Jussi')
+## setwd('/Users/juhaanttiisojarvi/Documents/jussi/opiskelu/unsupervised machine learning/git/uml/ex3Jussi')
+
 
 
 ## Exercise set 1
@@ -20,30 +21,17 @@ rGauss <- function(mean, var, theta, n){
 # draw 2000 samples from a 2-dim. mixture of gaussians:
 n <- 2000
 mean1 <- c(1,2)
-var1 <- c(1,3)
+var1 <- c(0.5,0.5)
 mean2 <-  c(-4,0)
-var2 <- c(0.5,4)
+var2 <- c(0.5,0.5)
 
 prior <- c(0.7, 0.3)
 n1 <- sum(rbinom(n, size = 1, prob = prior[1]))
 n2 <- (n-n1)
 
-data1 <- rGauss(mean1, var1, pi/6, n1)
-data2 <- rGauss(mean2, var2, (pi-pi/3), n2)
+data1 <- rGauss(mean1, var1, 0, n1)
+data2 <- rGauss(mean2, var2, 0, n2)
 data <- rbind(data1, data2)
-
-# the covariance matrices of the underlying distributions:
-# theta <- pi/6
-# R <- matrix(c(cos(theta), sin(theta), -sin(theta), cos(theta)),2,2) # Rotation matrix
-# D <- matrix(c(var1[1],0,0,var1[2]),2,2)# Dilation matrix
-# A <- D%*%R # First dilate, then rotate
-# cov1 <- t(A)%*%A
-# theta <- pi - pi/3
-# R <- matrix(c(cos(theta), sin(theta), -sin(theta), cos(theta)),2,2) # Rotation matrix
-# D <- matrix(c(var2[1],0,0,var2[2]),2,2)# Dilation matrix
-# A <- D%*%R # First dilate, then rotate
-# cov2 <- t(A)%*%A
-
 
 xlim <- c(min(data[1]), max(data[1]))
 ylim <- c(min(data[2]), max(data[2]))
@@ -55,10 +43,58 @@ points(data2, cex = 0.3, pch = 16, col = 'darkblue')
 
 
 # Exercise 2
+invRoot <- function(x){
+	eig <- eigen(x)
+	y <- eig$vectors %*% diag(1/sqrt(eig$values)) %*% t(eig$vectors)
+	return(y)
+}
+
+symOrtogProj <- function(x){
+	invRoot(x%*%t(x))%*%x
+}
+
+# generates a random covariance matrix
+createRCov <- function(ndim = 2){
+	lambda <- diag(rexp(ndim,0.5))
+	C <- matrix(rnorm(ndim^2, 0, 1), c(ndim,ndim))
+	C <- symOrtogProj(C)
+	C %*% lambda %*% t(C)
+}
+
+# generates a list of random covariance matrices
+createRListCov <- function(nclust = 2, ndim = 2){
+	C <- vector('list', nclust)
+	for(iii in 1 : nclust){
+		C[[iii]] <- createRCov(ndim)
+	}
+	C
+}
+
+# generates a list of random mean vectors
+createRListMean <- function(nclust = 2, ndim = 2){
+	mu <- vector('list', nclust)
+	for(iii in 1:nclust){
+		mu[iii] <- list(runif(ndim, -10,10))
+	}
+	mu
+}
+
+# generates a list of prior probabilities for the clusters
+createRListPie <- function(nclust){
+	pie <- c(sort(runif(nclust - 1)), 1)
+	apu <- pie
+	for(iii in 2:nclust){
+		pie[iii] <- apu[iii] - apu[iii - 1]
+	}
+	pie
+}
+
+# the posterior probabilities of the cluster indexes of the points
 pr <- function(x,C,mu,pie){
 	abs(det(C))^(-1/2) * exp(-1/2 * t(as.matrix(x-mu)) %*% solve(C) %*% (as.matrix(x-mu))) * pie
 }
 
+# This one is for the apply in function qt
 multWT <- function(x){
 	as.matrix(x) %*% t(as.matrix(x))
 }
@@ -83,23 +119,8 @@ qtstar <- function(data,C,mu,pie){
 }
 
 # The EM algorithm starts here
-EM <- function(data, nclust){
+EM <- function(data, nclust, C, mu, pie){
 	ndim <- length(data)
-	
-	# initializes starting point of maximization algorithm:
-	C <- vector('list', nclust)
-	for(iii in 1:nclust){
-		C[iii] <- list(diag(c(1,1)))
-	}
-	mu <- vector('list', nclust)
-	for(iii in 1:nclust){
-		mu[iii] <- list(runif(ndim, -10,10))
-	}
-	pie <- c(sort(runif(nclust - 1)), 1)
-	apu <- pie
-	for(iii in 2:nclust){
-		pie[iii] <- apu[iii] - apu[iii - 1]
-	}
 	
 	qts <- NA
 	
@@ -127,13 +148,11 @@ EM <- function(data, nclust){
 			pie[[j]] <- 1/n * sum(qts[[j]])
 		}
 	    
-	    # parameters after iteration:
-	    muAft <- mu
-	    CAft <- C
-	    pieAft <- pie
-	    
-	    condition <- sqrt(sum(c(unlist(CBfr), unlist(muBfr), unlist(pieBfr)) - c(unlist(CAft), unlist(muAft), unlist(pieAft)))^2) > 0.1
+	    # stop condition change of estimated parameters sufficiently small
+	    condition <- sqrt(sum(c(unlist(CBfr), unlist(muBfr), unlist(pieBfr)) - c(unlist(C), unlist(mu), unlist(pie)))^2) > 0.1
 	}
+	
+	# return
 	ret <- list("qts" = qts, 'mu' = mu, 'C' = C, "pie" = pie)
 	ret
 }
@@ -142,26 +161,32 @@ EM <- function(data, nclust){
 
 
 # Exercise 3
-em <- EM(data, nclust = 2)
+nclust = 2
+C <- list(diag(rep(1,length(data))))
+C <- rep(C,nclust)
+mu <- createRListMean(nclust, length(data))
+pie <- rep(1/nclust, nclust)
+
+# do EM and plot clusters:
+em <- EM(data, nclust, C, mu , pie)
 cindex <- apply(Reduce(cbind, em$qts), 1 , which.max)
 plot(data[cindex == 1,], cex = 0.3, pch = 16, col = 'forestgreen', xlim = xlim, ylim = ylim, xlab = 'x', ylab = 'y')
 points(data[cindex == 2,], cex = 0.3, pch = 16, col = 'darkblue')
 
 
-
 # Exercise 4
+
+# draw 100 samples from gaussian mixture with 4 clusters:
 n <- 100
+
 mean1 <- c(1,2)
-var1 <- c(1,3)
-
+var1 <- c(1,1)
 mean2 <-  c(-4,0)
-var2 <- c(0.5,4)
-
+var2 <- c(0.5,0.5)
 mean3 <- c(-5,10)
 var3 <- c(1,1)
-
 mean4 <- c(-10,-5)
-var4 <- c(1,5)
+var4 <- c(1,1)
 
 prior <- c(0.25, 0.5, 0.1, 0.4)
 
@@ -171,32 +196,35 @@ n2 <- sum(ni == 1)
 n3 <- sum(ni == 2)
 n4 <- sum(ni == 3)
 
-data1 <- rGauss(mean1, var1, pi/6, n1)
-data2 <- rGauss(mean2, var2, (pi-pi/3), n2)
-data3 <- rGauss(mean3, var3, (pi/2), n3)
-data4 <- rGauss(mean4, var4, (pi/2 - pi/6), n4)
+data1 <- rGauss(mean1, var1, 0, n1)
+data2 <- rGauss(mean2, var2, 0, n2)
+data3 <- rGauss(mean3, var3, 0, n3)
+data4 <- rGauss(mean4, var4, 0, n4)
 data <- rbind(data1, data2, data3, data4)
 
-# the covariance matrices of the underlying distributions:
-# theta <- pi/6
-# R <- matrix(c(cos(theta), sin(theta), -sin(theta), cos(theta)),2,2) # Rotation matrix
-# D <- matrix(c(var1[1],0,0,var1[2]),2,2)# Dilation matrix
-# A <- D%*%R # First dilate, then rotate
-# cov1 <- t(A)%*%A
-# theta <- pi - pi/3
-# R <- matrix(c(cos(theta), sin(theta), -sin(theta), cos(theta)),2,2) # Rotation matrix
-# D <- matrix(c(var2[1],0,0,var2[2]),2,2)# Dilation matrix
-# A <- D%*%R # First dilate, then rotate
-# cov2 <- t(A)%*%A
-
-
+# plot result:
 xlim <- c(min(data[1]), max(data[1]))
 ylim <- c(min(data[2]), max(data[2]))
+plot(data1, pch = 16, col = 'forestgreen', xlim = xlim, ylim = ylim, xlab = 'x', ylab = 'y')
+points(data2, pch = 16, col = 'darkblue')
+points(data3, pch = 16, col = 'purple')
+points(data4, pch = 16)
 
-plot(data1, cex = 0.3, pch = 16, col = 'forestgreen', xlim = xlim, ylim = ylim, xlab = 'x', ylab = 'y')
-points(data2, cex = 0.3, pch = 16, col = 'darkblue')
-points(data3, cex = 0.3, pch = 16, col = 'purple')
-points(data4, cex = 0.3, pch = 16)
+# Do EM with 4 clusters and plot clusters with 5 different initial points:
 
+nclust = 4
+em <- vector('list', 5)
+cindex <- vector('list', 5)
+for(k in 1:5){
+	C <- createRListCov(nclust, length(data))
+	mu <- createRListMean(nclust, length(data))
+	pie <- createRListPie(nclust)
+	em[[k]] <- EM(data, nclust, C, mu, pie)
+	cindex[[k]] <- apply(Reduce(cbind, em[[k]]$qts), 1 , which.max)
+}
 
+plot(data[cindex[[2]] == 1,], cex = 0.3, pch = 16, col = 'forestgreen', xlim = xlim, ylim = ylim, xlab = 'x', ylab = 'y')
+points(data[cindex[[2]] == 2,], cex = 0.3, pch = 16, col = 'darkblue')
+points(data[cindex[[2]] == 3,], cex = 0.3, pch = 16, col = 'purple')
+points(data[cindex[[2]] == 4,], cex = 0.3, pch = 16)
 

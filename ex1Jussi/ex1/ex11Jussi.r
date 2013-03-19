@@ -1,6 +1,6 @@
 ## Creates four sets of two domensional artificial data, and saves them in one data frame called "data", plots the four sets of data.
 
-# Standard normally distributed twodimensional artificial data:
+# normally distributed twodimensional artificial data:
 createArtificialData <- function(theta, var){
 	data <- cbind(rnorm(1000),rnorm(1000))
 	R <- t(matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)),2,2)) # Rotation matrix

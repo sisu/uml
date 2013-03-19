@@ -65,39 +65,44 @@ SOM <- function(data, nmodel, niter){
 		d <- lapply(model, eDist, y = data)
 		#the closest model vector for each point:
 		closest.model <- max.col(-t(Reduce(rbind, d)))
-		# distances of model vectors from each other
-		d <- lapply(model, eDist, Reduce(cbind,model))
 		# the neighbours of each model vector:
-		neighbours <- lapply(d, which.kmin, k = 3)
+		neighbours = vector('list', nmodel)
+		index <- c(nmodel, 1: nmodel, 1)
+		for(iii in 1:nmodel){
+			neighbours[[iii]] <- index[iii:(iii+2)]
+		}
 		# update the model vectors by mean of the data closest to them and their neighbours:
 		for(iii in 1:nmodel){
 			model[[iii]] <- rowMeans(data[, sapply(closest.model, '%in%', neighbours[[iii]])])
 		}
 	}
-	list('model' = model, 'closest.model' = closest.model)
+	list('model' = model, 'closest.model' = closest.model, 'neighbours' = neighbours)
 }
+
+nmodel = 20
+som <- SOM(data,nmodel,100)
 
 
 # preliminary plotting:
 plot(t(data), xlim = c(-10,10), asp = 1, pch = 16, cex = 0.5)
 for(j in 1:nmodel){
-	points(x = model[[j]][1], y = model[[j]][2], col = 'red', pch = 16)
+	points(x = som$model[[j]][1], y = som$model[[j]][2], col = 'red', pch = 16)
 }
 which.cluster <- 1
-for(j in neighbours[[which.cluster]]){
-	points(x = model[[j]][1], y = model[[j]][2], col = 'green', pch = 16)
+for(j in som$neighbours[[which.cluster]]){
+	points(x = som$model[[j]][1], y = som$model[[j]][2], col = 'green', pch = 16)
 }
-points(x = model[[which.cluster]][1], y = model[[which.cluster]][2], col = 'yellow', pch = 16)
+points(x = som$model[[which.cluster]][1], y = som$model[[which.cluster]][2], col = 'yellow', pch = 16)
 
-plot(t(data[, sapply(closest.model, '%in%', neighbours[[which.cluster]])]), xlim = c(-10,10), asp = 1, pch = 16, cex = 0.5)
-points(t(data[, -sapply(closest.model, '%in%', neighbours[[which.cluster]])]), cex = 0.5)
+plot(t(data[, sapply(som$closest.model, '%in%', som$neighbours[[which.cluster]])]), xlim = c(-10,10), asp = 1, pch = 16, cex = 0.5)
+points(t(data[, -sapply(som$closest.model, '%in%', som$neighbours[[which.cluster]])]), cex = 0.5)
 for(j in 1:nmodel){
-	points(x = model[[j]][1], y = model[[j]][2], col = 'red', pch = 16)
+	points(x = som$model[[j]][1], y = som$model[[j]][2], col = 'red', pch = 16)
 }
-for(j in neighbours[[which.cluster]]){
-	points(x = model[[j]][1], y = model[[j]][2], col = 'green', pch = 16)
+for(j in som$neighbours[[which.cluster]]){
+	points(x = som$model[[j]][1], y = som$model[[j]][2], col = 'green', pch = 16)
 }
-points(x = model[[which.cluster]][1], y = model[[which.cluster]][2], col = 'yellow', pch = 16)
+points(x = som$model[[which.cluster]][1], y = som$model[[which.cluster]][2], col = 'yellow', pch = 16)
 
 
 

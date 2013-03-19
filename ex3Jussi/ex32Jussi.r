@@ -36,14 +36,85 @@ index <- eig$values == sort(eig$values, decreasing = T)[1]
 MDS <- (eig$vectors)[,index]
 
 # plotting
-plot_colour(data[1,], data[2,], MDS)
+plot_colour(data[1,], data[2,], abs(MDS))
 
 
 
 ## Exercise 2
 PCA <- prcomp(t(data))
 projection <- apply(data,2, '%*%', PCA$rotation[,1])
-plot_colour(data[1,], data[2,], -projection)
+plot_colour(data[1,], data[2,], abs(projection))
 
 
+
+## Exercise 3
+# the Euclidian distance
+eDist <- function(x,y) sqrt(colSums((x-y)^2))
+
+# find indices for k smallest in a vector
+which.kmin <- function(x, k){
+	match(sort(x)[1:k], x)
+}
+
+SOM <- function(data, nmodel, niter){
+	ndim <- length(data[,1])
+	model <- vector('list', nmodel)
+	for(iii in 1:nmodel) model[[iii]] <- runif(2, min(data), max(data))
+	for(j in 1 : niter){
+		# distances of points to model vectors
+		d <- lapply(model, eDist, y = data)
+		#the closest model vector for each point:
+		closest.model <- max.col(-t(Reduce(rbind, d)))
+		# distances of model vectors from each other
+		d <- lapply(model, eDist, Reduce(cbind,model))
+		# the neighbours of each model vector:
+		neighbours <- lapply(d, which.kmin, k = 3)
+		# update the model vectors by mean of the data closest to them and their neighbours:
+		for(iii in 1:nmodel){
+			model[[iii]] <- rowMeans(data[, sapply(closest.model, '%in%', neighbours[[iii]])])
+		}
+	}
+	list('model' = model, 'closest.model' = closest.model)
+}
+
+
+# preliminary plotting:
+plot(t(data), xlim = c(-10,10), asp = 1, pch = 16, cex = 0.5)
+for(j in 1:nmodel){
+	points(x = model[[j]][1], y = model[[j]][2], col = 'red', pch = 16)
+}
+which.cluster <- 1
+for(j in neighbours[[which.cluster]]){
+	points(x = model[[j]][1], y = model[[j]][2], col = 'green', pch = 16)
+}
+points(x = model[[which.cluster]][1], y = model[[which.cluster]][2], col = 'yellow', pch = 16)
+
+plot(t(data[, sapply(closest.model, '%in%', neighbours[[which.cluster]])]), xlim = c(-10,10), asp = 1, pch = 16, cex = 0.5)
+points(t(data[, -sapply(closest.model, '%in%', neighbours[[which.cluster]])]), cex = 0.5)
+for(j in 1:nmodel){
+	points(x = model[[j]][1], y = model[[j]][2], col = 'red', pch = 16)
+}
+for(j in neighbours[[which.cluster]]){
+	points(x = model[[j]][1], y = model[[j]][2], col = 'green', pch = 16)
+}
+points(x = model[[which.cluster]][1], y = model[[which.cluster]][2], col = 'yellow', pch = 16)
+
+
+
+# Exercise 4
+I <- vector('list', 6)
+for(iii in 1:6){
+	file <- paste(paste('I', iii, sep = ''), '.txt', sep = '')
+	I[[iii]] <- as.matrix(read.table(file))
+}
+genPatches <- function(img) {
+	r <- floor(dim(img)[1]/10)
+	c <- floor(dim(img)[2]/10)
+	data.frame(lapply(0:(r-1), function(y) sapply(0:(c-1), function(x) img[10*y+(1:10),10*x+(1:10)])))
+}
+patches <- data.frame(lapply(I, genPatches))
+
+
+
+# Exercise 5
 

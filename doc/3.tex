@@ -26,4 +26,29 @@ Master student}
 	\includegraphics[totalheight=0.5\textheight]{scatterE31.pdf}
 	\caption{Scatter plot of the data.} \label{fig:scatterE31}
 \end{figure}
+
+\section{Exercise set 2}
+\subsection{Exercise 1}\label{sec:ex21}
+Multi-dimensional scaling is a projection method that is based on analyzing the distances between the data vectors.
+Let $\vec X=(\vec x_1,\dots,\vec x_N)$ be the data matrix to be analyzed.
+Each $\vec x_i$ is a column vector of length $n$.
+In linear MDS we look at the distance matrix where the elements are defined by $d_{ij}=||\vec x_i-\vec x_j||^2$.
+The matrix is normalize to have the sum of each row and column equal to zero by the rule
+$$ \tilde{d}_{ij} = d_{ij} - \frac{1}{N}\sum_id_{ij} - \frac{1}{N}\sum_jd_{ij} + \frac{1}{N^2}\sum_{ij}d_{ij}. $$
+
+It can be shown that $\tilde{d}_{ij} = -2\vec x_i^T\vec x_j$, which means that the normalized distance matrix is equal to $-2\vec X^T\vec X$.
+We perform eigenvalue decomposition for the distance matrix, but since it is just a scaled version of $\vec X^T\vec X$, it has only $n$ non-zero eigenvalues, and the eigenvectors can be obtained from the eigenvectors of $\frac{1}{N}\vec X\vec X^T$: it is easy to show that if $\vec w$ is an eigenvector of $\vec X\vec X^T$, then $\vec X^T\vec w$ is an eigenvector of $\vec X^T\vec X$.
+
+The first component given by linear MDS on the given data is displayed in Figure~\ref{fig:mds}. The other component is orthogonal to the first. It can be seen that the linear projection gives quite a bad result as many points have the same color even when they are far from each other. The result is the same as performing PCA and the eigenvalues of $\frac{1}{N}\vec X\vec X^T$ are $13.23$ and $10.94$ and the variance explained by the first component is thus only $\frac{13.23}{13.23+10.94}\approx 55\%$.
+\begin{figure}\begin{minipage}{0.4\columnwidth}\centering
+	\includegraphics[scale=0.6]{mds}
+	\caption{Linear MDS performed on data where linear distribution fits badly. The colors of points are defined by their projections on the components given by linear MDS.}\label{fig:mds}
+\end{minipage}\hfil\begin{minipage}{0.4\columnwidth}\centering
+	\includegraphics[scale=0.6]{mdspca}
+	\caption{Result of doing PCA on the given data. The principal components are shown as arrows and the data points are colored according to their projection to the first principal components. The projections are equal to those given by linear MDS.}\label{fig:mdspca}
+\end{minipage}\end{figure}
+
+\subsection{Exercise 2}
+As discussed in Section~\ref{sec:ex21}, PCA gives the same result as linear MDS, as is displayed in Figure~\ref{fig:mdspca}.
+
 \end{document}

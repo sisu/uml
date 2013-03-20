@@ -8,9 +8,15 @@ toNorm <- function(v) (v-min(v))/(max(v)-min(v))
 plotcol <- function() {
 	c1 <- c(t(e$vectors[,1]) %*% D)
 	c2 <- c(t(e$vectors[,2]) %*% D)
-	par(mfrow = c(1,2))
-	plot(t(D), col=hsv(toNorm(c1)))
-	plot(t(D), col=hsv(toNorm(c2)))
+#	par(mfrow = c(1,2))
+	plot(t(D), col=hsv(.5+.5*toNorm(c1)), pch=16, cex=0.5, xlab=NA, ylab=NA)
+#	plot(t(D), col=hsv(toNorm(c2)), xlab=NA, ylab=NA)
+}
+plotpca <- function() {
+	plotcol()
+	c1 <- 3*e$vectors[,1]
+	c2 <- 3*e$vectors[,2]
+	arrows(x0=0,y0=0,x1=c(c1[1],c2[1]), y1=c(c1[2],c2[2]))
 }
 
 # X is n*N matrix, n is the dimension and N number of samples
@@ -61,4 +67,15 @@ ppPatch <- function(x) {
 	s <- sqrt(mean(x**2))
 	if (s==0) x else x/s
 }
-pp <- apply(patches,2,ppPatch)
+#pp <- apply(patches,2,ppPatch)
+
+mkfigs <- function() {
+	w<-5
+	h<-5
+	pdf('mds.pdf',width=w,height=h)
+	plotcol()
+	dev.off()
+	pdf('mdspca.pdf',width=w,height=h)
+	plotpca()
+	dev.off()
+}

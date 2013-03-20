@@ -75,7 +75,7 @@ ppPatch <- function(x) {
 	s <- sqrt(mean(x**2))
 	if (s==0) x else x/s
 }
-#pp <- apply(patches,2,ppPatch)
+pp <- apply(patches,2,ppPatch)
 
 mkfigs <- function() {
 	w<-5

@@ -69,4 +69,25 @@ It can be seen that in some cases the algorithm finds the "correct" nonlinear in
 	\caption{Results of applying the SOM algorithm to data using 4, 7, 12 and 20 clusters. The algorithm may converge to a different local optimum depending on the starting point, and in the cases with 4 and 20 clusters the result is clearly suboptimal.}\label{fig:som}
 \end{figure}
 
+\subsection{Exercise 4}
+We splitted each of the provided images into pacthes of size $10\times10$ pixels and composed those patches into a single matrix of size $100\times 15696$.
+Each patch is considered to be a realization of a random 100-dimensional vector \vec v.
+Since the patches come from different images, the distribution of \vec v is a mixture of the distributions defined by each of the images.
+This differs from the distribution of the image data in the project~2, exercise~3: there each sample was a linear combination of several random variables, here each sample comes from a single distribution but the source distribution is chosen randomly.
+Another difference is that in the earlier exercise each pixel was assumed independent, whereas here the variables are $10\times 10$ pixel patches and we don't assume independence between pixels of the same patch.
+
+\subsection{Exercise 5}
+We preprocessed the patches by centering each of them around zero and scaled them to unit variance.
+After that we applied the SOM algorithm to the preprocessed patches, receiving a sequence of $10\times 10$ pixel images as output.
+The results using 10, 20 and 30 model vectors are shown in Figure~\ref{fig:patch}.
+The patches are so small that it is impossible to recognize any features of the original images from the resulting model vectors.
+Instead it can be seen that model vector represents some region of the patch and adjacent model vectors represent almost the same region.
+
+\begin{figure}
+	\includegraphics[width=\columnwidth]{patch10}
+	\includegraphics[width=\columnwidth]{patch20}
+	\includegraphics[width=\columnwidth]{patch30}
+	\caption{SOM algorithm applied to image patches with 10, 20 and 30 model vectors. The neighbor relations between the model vectors make adjacent vector images look similar.}\label{fig:patch}
+\end{figure}
+
 \end{document}

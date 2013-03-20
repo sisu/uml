@@ -30,7 +30,7 @@ som <- function(X, k) {
 #	getIsNeighbor <- function(a) closest==a
 	calcCenter <- function(isN) if (sum(isN)==0) rnorm(n) else rowSums(X[,isN]) / sum(isN)
 
-	for(i in 1:20) {
+	for(i in 1:30) {
 		print(i)
 		closest <- apply(X,2,getClosest)
 #		print(closest)
@@ -47,11 +47,19 @@ plotSOM <- function(X, ws) {
 	sdist <- function(x,y) sum((x-y)**2)
 	getClosest <- function(x) which.min(apply(ws,2,sdist,x=x))
 	closest <- apply(X,2,getClosest)
-	rb <- rainbow(dim(ws)[2])
-	plot(t(X), col=rb[closest])
+	rb <- rainbow(dim(ws)[2], v=0.9)
+	plot(t(X), col=rb[closest], pch=16, cex=0.5, xlab=NA, ylab=NA)
 	lines(t(ws))
 #	points(t(ws),col=rb, pch=4, cex=2)
 	points(t(ws),pch=4, cex=2)
+}
+somPlots <- function(X) {
+	sz <- c(4,7,12,20)
+	par(mfrow=c(2,2))
+	for(i in sz) {
+		w <- som(X, i)
+		plotSOM(X,w)
+	}
 }
 
 #I <- lapply(1:6, function(i) as.matrix(read.table(paste('I',i,'.txt',sep=''))))
@@ -77,5 +85,8 @@ mkfigs <- function() {
 	dev.off()
 	pdf('mdspca.pdf',width=w,height=h)
 	plotpca()
+	dev.off()
+	pdf('som.pdf',width=7,height=7)
+	somPlots(D)
 	dev.off()
 }

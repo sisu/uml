@@ -58,22 +58,29 @@ which.kmin <- function(x, k){
 
 SOM <- function(data, nmodel, niter){
 	ndim <- length(data[,1])
+	index <- c(nmodel, 1: nmodel, 1)
+	neighbours = vector('list', nmodel)
+	for(iii in 1:nmodel){
+		neighbours[[iii]] <- index[iii:(iii+2)]
+	}
 	model <- vector('list', nmodel)
-	for(iii in 1:nmodel) model[[iii]] <- runif(2, min(data), max(data))
+	for(iii in 1:nmodel) model[[iii]] <- rnorm(dim(data)[1])
 	for(j in 1 : niter){
 		# distances of points to model vectors
 		d <- lapply(model, eDist, y = data)
 		#the closest model vector for each point:
 		closest.model <- max.col(-t(Reduce(rbind, d)))
-		# the neighbours of each model vector:
-		neighbours = vector('list', nmodel)
-		index <- c(nmodel, 1: nmodel, 1)
-		for(iii in 1:nmodel){
-			neighbours[[iii]] <- index[iii:(iii+2)]
-		}
 		# update the model vectors by mean of the data closest to them and their neighbours:
 		for(iii in 1:nmodel){
-			model[[iii]] <- rowMeans(data[, sapply(closest.model, '%in%', neighbours[[iii]])])
+			if(iii %in% closest.model){
+				if(length(data[, sapply(closest.model, '%in%', neighbours[[iii]])]) != 0){
+					model[[iii]] <- rowMeans(data[, sapply(closest.model, '%in%', neighbours[[iii]])])
+				} else {
+					model[[iii]] <- mean(data[, sapply(closest.model, '%in%', neighbours[[iii]])])
+	
+				}
+				
+			}
 		}
 	}
 	list('model' = model, 'closest.model' = closest.model, 'neighbours' = neighbours)
@@ -82,31 +89,18 @@ SOM <- function(data, nmodel, niter){
 nmodel = 20
 som <- SOM(data,nmodel,100)
 
-
-# preliminary plotting:
-plot(t(data), xlim = c(-10,10), asp = 1, pch = 16, cex = 0.5)
+# plot
+plot_colour(data[1,], data[2,], som$closest.model)
 for(j in 1:nmodel){
-	points(x = som$model[[j]][1], y = som$model[[j]][2], col = 'red', pch = 16)
+	points(x = som$model[[j]][1], y = som$model[[j]][2], pch = 16)
 }
-which.cluster <- 1
-for(j in som$neighbours[[which.cluster]]){
-	points(x = som$model[[j]][1], y = som$model[[j]][2], col = 'green', pch = 16)
-}
-points(x = som$model[[which.cluster]][1], y = som$model[[which.cluster]][2], col = 'yellow', pch = 16)
-
-plot(t(data[, sapply(som$closest.model, '%in%', som$neighbours[[which.cluster]])]), xlim = c(-10,10), asp = 1, pch = 16, cex = 0.5)
-points(t(data[, -sapply(som$closest.model, '%in%', som$neighbours[[which.cluster]])]), cex = 0.5)
-for(j in 1:nmodel){
-	points(x = som$model[[j]][1], y = som$model[[j]][2], col = 'red', pch = 16)
-}
-for(j in som$neighbours[[which.cluster]]){
-	points(x = som$model[[j]][1], y = som$model[[j]][2], col = 'green', pch = 16)
-}
-points(x = som$model[[which.cluster]][1], y = som$model[[which.cluster]][2], col = 'yellow', pch = 16)
 
 
 
-# Exercise 4
+
+
+
+## Exercise 4
 I <- vector('list', 6)
 for(iii in 1:6){
 	file <- paste(paste('I', iii, sep = ''), '.txt', sep = '')
@@ -121,5 +115,30 @@ patches <- data.frame(lapply(I, genPatches))
 
 
 
-# Exercise 5
+
+## Exercise 5
+# preprocessing
+patches <- apply(patches, 2, '-', rowMeans(patches))
+patches <- t(apply(patches, 1, function(x) x/sqrt(var(x))))
+
+# som-algorithm application:
+som <- vector('list', 3)
+for(iii in 1:3){
+	som[[iii]] <- SOM(patches, iii*10, 10)
+}
+
+# visualization:
+source('visual.r')
+visual(Reduce(rbind,som[[3]]$model))
+
+
+## Exercise 6
+patches <- data.frame(lapply(I, genPatches))
+som <- vector('list', 3)
+for(iii in 1:3){
+	som[[iii]] <- SOM(patches, iii*10, 10)
+}
+visual(Reduce(rbind,som[[1]]$model))
+
+
 

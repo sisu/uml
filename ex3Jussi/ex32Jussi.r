@@ -133,12 +133,22 @@ visual(Reduce(rbind,som[[3]]$model))
 
 
 ## Exercise 6
-patches <- data.frame(lapply(I, genPatches))
-som <- vector('list', 3)
-for(iii in 1:3){
-	som[[iii]] <- SOM(patches, iii*10, 10)
-}
-visual(Reduce(rbind,som[[1]]$model))
+patches <- as.matrix(data.frame(lapply(I, genPatches)))
 
+# no preprocessing:
+som <- SOM(patches, 20, 10)
+visual(Reduce(rbind,som$model))
 
+# no normalization to unit variance:
+som <- SOM(apply(patches, 2, '-', rowMeans(patches)), 20, 10)
+visual(Reduce(rbind,som$model))
 
+# no subtraction of mean:
+som <- SOM(t(apply(patches, 1, function(x) x/sqrt(var(x)))), 20, 10)
+visual(Reduce(rbind,som$model))
+
+# with preprocessing:
+patches <- apply(patches, 2, '-', rowMeans(patches))
+patches <- t(apply(patches, 1, function(x) x/sqrt(var(x))))
+som <- SOM(patches, 20,10)
+visual(Reduce(rbind,som$model))

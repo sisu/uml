@@ -21,11 +21,114 @@ Master student}
 \maketitle
 
 \section{Exercise set 1}
+
 \subsection{Exercise 1}
-\begin{figure}\centering
-	\includegraphics[totalheight=0.5\textheight]{scatterE31.pdf}
-	\caption{Scatter plot of the data.} \label{fig:scatterE31}
-\end{figure}
+In the first exercise we were asked to draw 2000 samples from a
+two-dimensional mixture of Gaussians, with two clusters. The
+parameters of the Gaussian mixture model are the prior probabilities
+of the clusters, and the covariance matrices and means of the Gaussian
+clusters. The generated data can be seen in
+figure\ref{fig:scatterE31}. We used the following values for the
+parameters:
+
+\noindent The means: 
+\begin{verbatim}
+> mean1
+[1] 1 2
+> mean2
+[1] -6  0
+\end{verbatim}
+
+\noindent The covariances:
+\begin{verbatim}
+> cov1
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+> cov2
+         [,1]     [,2]
+[1,]  4.18750 -6.81995
+[2,] -6.81995 12.06250
+\end{verbatim}
+
+\noindent The prior probabilites: 
+\begin{verbatim}
+> prior
+[1] 0.7 0.3
+\end{verbatim}
+
+The prior probabilities of the clusters are the probabilities, that a
+generated point belongs to given cluster. Therefore in a large enough
+sample the proportional numbers of points in each cluster are roughly
+the prior probabilities. The covariance matrix and mean give the
+centerpoint and elongation of the data cloud generated from the
+gaussian cluster. 
+
+\begin{figure}\begin{minipage}{0.4\columnwidth}\centering
+	\includegraphics[scale=0.4]{scatterE31.pdf}
+	\caption{Scatter plot of the data.}\label{fig:scatterE31}
+\end{minipage}\hfil\begin{minipage}{0.4\columnwidth}\centering
+	\includegraphics[scale=0.4]{scatterE313.pdf}
+	\caption{Scatter plot of the data. The color of each data
+point indicates the cluster it belongs to according to the MAP
+estimate}\label{fig:scatterE313}
+\end{minipage}\end{figure}
+
+\subsection{Exercise 2}
+Next we implemented the EM algorithm for the Gaussian mixture
+model. The EM algorithm is a general principle for designing
+algorithms for estimation of latent variable models. It is widely used
+for estimation of Gaussian mixtures. In general it consists of two
+steps: the expectation step and the maximization step. In the Gaussian
+mixture case the expectation step is equivalent to computing the
+maximum likelihood estimates for the three parameters of the model,
+and in the maximization step these values were set as the new
+estimates.
+
+After testing our implementation of the algorithm on the data generated in the previous
+exercise, the following estimates were gained for the parameters:
+
+\noindent The estimated Means:
+\begin{verbatim}
+$mu
+$mu[[1]]
+ data.1...  data.2... 
+-6.0584837  0.1157335 
+
+$mu[[2]]
+data.1... data.2... 
+0.9861976 2.0279552 
+\end{verbatim}
+
+\noindent The estimated covariances:
+\begin{verbatim}
+$C
+$C[[1]]
+          [,1]      [,2]
+[1,]  4.411821 -7.110406
+[2,] -7.110406 12.328855
+
+$C[[2]]
+             [,1]         [,2]
+[1,] 0.9691754402 0.0006272787
+[2,] 0.0006272787 0.9724238524
+\end{verbatim}
+
+\noindent The estimated prior densities:
+\begin{verbatim}
+$pie
+[1] 0.291 0.709
+\end{verbatim}
+
+Clearly the estimated parameters are very close to the true parameters
+given in the previous subsection.
+
+\subsection{Exercise 3}
+
+In figure \ref{fig:scatterE313} a scatter plot where the color of each data
+point indicates the cluster it belongs to according to the MAP
+estimate can be seen.
+
 
 \section{Exercise set 2}
 \subsection{Exercise 1}\label{sec:ex21}

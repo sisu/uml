@@ -129,6 +129,27 @@ In figure \ref{fig:scatterE313} a scatter plot where the color of each data
 point indicates the cluster it belongs to according to the MAP
 estimate can be seen.
 
+\subsection{Exercise 4}
+
+In the last exercise of the first set, we performed clustering with EM
+for data with four clusters using 5 different starting points. The
+algorithm got stuck in a single point, and therefore the objective
+function local maxima had different values. Two scatter plots of the data
+where points are colored according to membership of a cluster can be
+seen in figure \ref{fig:4cluster}. Only the lowest objective and
+highest objective clustering are shown.
+
+It seems that the algorithm worked well, though in the lower objective
+function value case it seems one cluster got stuck in a point, and
+therefore it is more similar to clustering result with 3 clusters,
+with one missing point.
+
+\begin{figure}[h!]
+	\includegraphics[width=\columnwidth]{4cluster.pdf}
+	\caption{kuvateksti}\label{fig:4cluster}
+\end{figure}
+
+
 
 \section{Exercise set 2}
 \subsection{Exercise 1}\label{sec:ex21}

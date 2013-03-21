@@ -28,7 +28,7 @@ two-dimensional mixture of Gaussians, with two clusters. The
 parameters of the Gaussian mixture model are the prior probabilities
 of the clusters, and the covariance matrices and means of the Gaussian
 clusters. The generated data can be seen in
-figure\ref{fig:scatterE31}. We used the following values for the
+Figure~\ref{fig:scatterE31}. We used the following values for the
 parameters:
 
 \noindent The means: 
@@ -125,7 +125,7 @@ given in the previous subsection.
 
 \subsection{Exercise 3}
 
-In figure \ref{fig:scatterE313} a scatter plot where the color of each data
+In Figure~\ref{fig:scatterE313} a scatter plot where the color of each data
 point indicates the cluster it belongs to according to the MAP
 estimate can be seen.
 
@@ -136,7 +136,7 @@ for data with four clusters using 5 different starting points. The
 algorithm got stuck in a single point, and therefore the objective
 function local maxima had different values. Two scatter plots of the data
 where points are colored according to membership of a cluster can be
-seen in figure \ref{fig:4cluster}. Only the lowest objective and
+seen in Figure~\ref{fig:4cluster}. Only the lowest objective and
 highest objective clustering are shown.
 
 It seems that the algorithm worked well, though in the lower objective
@@ -199,6 +199,7 @@ It can be seen that in some cases the algorithm finds the "correct" nonlinear in
 \subsection{Exercise 4}
 We splitted each of the provided images into pacthes of size $10\times10$ pixels and composed those patches into a single matrix of size $100\times 15696$.
 Each patch is considered to be a realization of a random 100-dimensional vector \vec v.
+
 Since the patches come from different images, the distribution of \vec v is a mixture of the distributions defined by each of the images.
 This differs from the distribution of the image data in the project~2, exercise~3: there each sample was a linear combination of several random variables, here each sample comes from a single distribution but the source distribution is chosen randomly.
 Another difference is that in the earlier exercise each pixel was assumed independent, whereas here the variables are $10\times 10$ pixel patches and we don't assume independence between pixels of the same patch.
@@ -215,6 +216,20 @@ Instead it can be seen that model vector represents some region of the patch and
 	\includegraphics[width=\columnwidth]{patch20}
 	\includegraphics[width=\columnwidth]{patch30}
 	\caption{SOM algorithm applied to image patches with 10, 20 and 30 model vectors. The neighbor relations between the model vectors make adjacent vector images look similar.}\label{fig:patch}
+\end{figure}
+
+\subsection{Exercise 6}
+Figure~\ref{fig:nopp} shows the result of performing SOM as in the previous task but omitting either the centering or the scaling of the data.
+The vectors in Figure~\ref{fig:patch} all had about uniform abount of white in the pixels but when the scaling is omitted, some patches may be more bright than others and as a result some model vectors are clearly more bright than others.
+
+Subtracting the mean combined with the scaling causes some differences to appear in all the patches even if the initial colors of the pixels where quite close to each other.
+If the subtracting of the mean is omitted, patches where initially all the pixels have quite bright value will have all the pixels about the same color even after scaling.
+As a result, in some of the model vectors of Figure~\ref{fig:nopp} all the pixels have about equal brightness, whereas there were always clear differences when we did the full preprocessing.
+
+\begin{figure}
+	\includegraphics[width=\columnwidth]{noscale}
+	\includegraphics[width=\columnwidth]{nocenter}
+	\caption{The top image shows the result of SOM when scaling the patches to unit variance is omitted, and the bottom image the case when the patches are scaled but not centered.}\label{fig:nopp}
 \end{figure}
 
 \end{document}

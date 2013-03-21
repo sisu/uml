@@ -70,12 +70,17 @@ genPatches <- function(img) {
 }
 patches <- data.frame(lapply(I, genPatches))
 
-ppPatch <- function(x) {
-	x <- x-mean(x)
+toUnitVar <- function(x) {
 	s <- sqrt(mean(x**2))
 	if (s==0) x else x/s
 }
+center <- function(x) x-mean(x)
+ppPatch <- function(x) {
+	toUnitVar(center(x))
+}
 pp <- apply(patches,2,ppPatch)
+ppNoScale <- apply(patches, 2, center)
+ppNoCenter <- apply(patches, 2, toUnitVar)
 
 mkfigs <- function() {
 	w<-5

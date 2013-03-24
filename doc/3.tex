@@ -88,7 +88,7 @@ estimates.
 After testing our implementation of the algorithm on the data generated in the previous
 exercise, the following estimates were gained for the parameters:
 
-\noindent The estimated Means:
+\noindent The estimated means:
 \begin{verbatim}
 $mu
 $mu[[1]]
@@ -147,9 +147,9 @@ with one missing point.
 \begin{figure}[h!]
 	\includegraphics[width=\columnwidth]{4cluster.pdf}
 	\caption{Scatter plots of the data
-where points are colored according to membership of a cluster. Right
-the clustering corresponding to the lowest objective function value and
-right the highest.}\label{fig:4cluster}
+where points are colored according to membership of a cluster. The clustering
+in the left figure corresponds to the lowest objective function value and
+in the right figure the highest.}\label{fig:4cluster}
 \end{figure}
 
 
@@ -180,6 +180,7 @@ The result is the same as performing PCA and the eigenvalues of $\frac{1}{N}\vec
 
 \subsection{Exercise 2}
 As discussed in Section~\ref{sec:ex21}, PCA gives the same result as linear MDS, as is displayed in Figure~\ref{fig:mdspca}.
+In fact taking the PCA is a good way to compute the MDS, since in PCA we do eigenvalue decomposition for the matrix $\vec X\vec X^T$ which is usually much smaller than $\vec X^T\vec X$, as the size of $\vec X\vec X^T$ only depends on the number of variables and not on the number of samples.
 
 \subsection{Exercise 3}
 The self-orginizing map is a way to perform nonlinear projection and clustering by finding a set of model vectors that act as cluster centers and have some predefined neighborhood relations between them.
